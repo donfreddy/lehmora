@@ -29,7 +29,7 @@ export const products: Product[] = [
     focus: "Marketplace & Escrow System",
     pitch: "La plateforme de confiance pour le co-abonnement et le partage de services numériques. Sécurisée par un système de paiement séquestre automatisé.",
     menuDescription: "Marketplace & paiement séquestre pour abonnements numériques.",
-    url: "https://famsub.app",
+    url: "https://staging.famsub.com",
     accent: "var(--color-famsub)",
   },
   {
@@ -41,7 +41,7 @@ export const products: Product[] = [
     focus: "Social Expense & Tontine Engine",
     pitch: "La référence de la finance communautaire non-custodiale. Digitalisation des tontines, gestion transparente des dépenses de groupe et automatisation des relances.",
     menuDescription: "Finance communautaire non-custodiale & tontines digitalisées.",
-    url: "https://tallyno.app",
+    url: "https://tallyno-landing.vercel.app",
     accent: "var(--color-tallyno)",
   },
   {
@@ -53,7 +53,7 @@ export const products: Product[] = [
     focus: "SaaS de Recouvrement & Gestion Scolaire",
     pitch: "La solution B2B permettant aux établissements d'automatiser la collecte des frais de scolarité, réduire les impayés et piloter leur trésorerie en temps réel.",
     menuDescription: "SaaS B2B de gestion et recouvrement des frais scolaires.",
-    url: "https://payskool.app",
+    url: "https://payskool.vercel.app",
     accent: "var(--color-payskool)",
   },
 ];
