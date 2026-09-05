@@ -1,0 +1,162 @@
+---
+import { Compass, Cpu, Landmark, ShieldCheck } from "lucide-react";
+
+const pillars = [
+  {
+    title: "Souveraineté Technique",
+    text: "Concevoir des architectures pensées dès le premier jour pour les contraintes réelles du terrain (connectivité, régulations locales, écosystèmes Mobile Money).",
+  },
+  {
+    title: "Pérennité Institutionnelle",
+    text: "Refuser la dette technique et le code jetable. Construire chaque système avec la même rigueur que les grands réseaux bancaires initiaux.",
+  },
+  {
+    title: "Inclusion Économique",
+    text: "Digitaliser les usages informels et communautaires historiques (tontines, entraide, frais scolaires) sans en dénaturer la confiance humaine.",
+  },
+];
+
+const missionSteps = [
+  {
+    verb: "Éditer",
+    text: "des logiciels autonomes qui résolvent des frictions d'usage massives.",
+  },
+  {
+    verb: "Mutualiser",
+    text: "un moteur d'ingénierie commun — double-entrée, chiffrement, haute disponibilité — pour garantir zéro faille sur tous nos produits.",
+  },
+  {
+    verb: "Pérenniser",
+    text: "l'accès aux services numériques grâce à une approche offline-first et cloud-native.",
+  },
+];
+
+const values = [
+  {
+    title: "Rigorous Engineering",
+    text: "La sécurité, la traçabilité transactionnelle et la Clean Architecture ne sont pas des options. Nous construisons pour résister au temps et à la charge.",
+    Icon: Cpu,
+  },
+  {
+    title: "Grounded Innovation",
+    text: "Nous ne copions pas l'Occident. Nous étudions les dynamiques réelles du marché africain — tontines, cash flow, réseaux sociaux — pour créer des modèles logiciels uniques.",
+    Icon: Compass,
+  },
+  {
+    title: "Privacy & Non-Custodial Integrity",
+    text: "Les données et les fonds de nos utilisateurs leur appartiennent. Nos architectures garantissent l'isolation, la transparence totale et le respect absolu de la vie privée.",
+    Icon: ShieldCheck,
+  },
+  {
+    title: "Built to Last",
+    text: "Chaque ligne de code, chaque choix d'infrastructure et chaque partenariat est évalué sur un horizon de plusieurs décennies.",
+    Icon: Landmark,
+  },
+];
+---
+
+<section id="dna">
+  <div class="mx-auto max-w-5xl border-surface-border px-6 py-24 md:border-x">
+    <div class="max-w-2xl">
+      <p class="font-mono text-xs uppercase tracking-wider text-lehmora">
+        Vision
+      </p>
+      <h2
+        class="mt-3 text-balance text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl"
+      >
+        L'ingénierie de confiance comme standard continental.
+      </h2>
+      <p class="mt-6 max-w-xl text-[15px] leading-relaxed text-text-secondary">
+        Dans 50 ans, l'économie émergente sera intégralement numérisée. Notre
+        vision est d'être le socle invisible mais indispensable sur lequel
+        reposent les transactions, les communautés et les institutions de
+        demain.
+      </p>
+
+      <ol class="mt-10 space-y-6 border-l border-surface-border pl-6">
+        {
+          pillars.map((pillar, index) => (
+            <li class="relative">
+              <span class="absolute -left-7.25 top-0.5 font-mono text-xs text-text-muted">
+                {index + 1}
+              </span>
+              <h3 class="text-[15px] font-medium text-text-primary">
+                {pillar.title}
+              </h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-text-secondary">
+                {pillar.text}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+
+  <div
+    class="screen-line-before mx-auto max-w-5xl border-surface-border px-6 py-24 md:border-x"
+  >
+    <div class="max-w-2xl">
+      <p class="font-mono text-xs uppercase tracking-wider text-lehmora">
+        Mission
+      </p>
+      <h2
+        class="mt-3 text-balance text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl"
+      >
+        Transformer la complexité émergente en simplicité logicielle.
+      </h2>
+      <p class="mt-6 max-w-xl text-[15px] leading-relaxed text-text-secondary">
+        Notre mission est de développer et d'opérer un portefeuille de solutions
+        SaaS distribuées capables d'automatiser, de sécuriser et de fluidifier
+        les flux financiers et administratifs des individus et des
+        organisations.
+      </p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        {
+          missionSteps.map((step) => (
+            <div class="rounded-xl border border-solid! border-surface-border bg-surface p-4">
+              <h3 class="text-[15px] font-medium text-text-primary">
+                {step.verb}
+              </h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-text-secondary">
+                {step.text}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="screen-line-before mx-auto max-w-5xl border-surface-border px-6 py-24 md:border-x"
+  >
+    <div>
+      <p class="font-mono text-xs uppercase tracking-wider text-lehmora">
+        Valeurs
+      </p>
+      <h2
+        class="mt-3 max-w-xl text-balance text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl"
+      >
+        Les principes d'ingénierie non négociables.
+      </h2>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {
+          values.map(({ title, text, Icon }) => (
+            <div class="group rounded-xl border border-solid! border-surface-border bg-surface p-6 transition-colors hover:border-lehmora/50">
+              <Icon size={20} strokeWidth={1.75} className="text-lehmora" />
+              <h3 class="mt-4 text-[15px] font-medium text-text-primary">
+                {title}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+                {text}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

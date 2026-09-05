@@ -1,0 +1,70 @@
+---
+import { ArrowUpRight } from "lucide-react";
+import { products } from "../data/products";
+---
+
+<section id="portfolio">
+  <div class="mx-auto max-w-5xl border-surface-border px-6 py-24 md:border-x">
+    <h2
+      class="max-w-xl text-balance text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl"
+    >
+      L'écosystème Lehmora Labs.
+    </h2>
+    <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-text-secondary">
+      Trois produits. Trois verticales. Un socle technique unique.
+    </p>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        products.map((product) => (
+          <a
+            href={product.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group relative flex flex-col rounded-2xl border border-solid! border-surface-border bg-surface p-6 transition-colors"
+            style={`--accent: ${product.accent}`}
+          >
+            <div
+              class="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style="box-shadow: inset 0 0 0 1px var(--accent); background: radial-gradient(120px 80px at 20% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent)"
+            />
+
+            <div class="relative flex items-center justify-between">
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full border border-solid! border-surface-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide"
+                style="color: var(--accent)"
+              >
+                <span
+                  class="h-1.5 w-1.5 rounded-full"
+                  style="background-color: var(--accent)"
+                />
+                {product.statusLabel}
+              </span>
+              <ArrowUpRight
+                size={16}
+                className="text-text-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </div>
+
+            <p class="relative mt-5 font-mono text-[11px] text-text-muted">
+              {product.category}
+            </p>
+            <h3 class="relative mt-1.5 text-lg font-semibold text-text-primary">
+              {product.name}
+            </h3>
+            <p class="relative mt-1 text-sm text-text-secondary">
+              {product.focus}
+            </p>
+            <p class="relative mt-4 text-sm leading-relaxed text-text-secondary">
+              {product.pitch}
+            </p>
+
+            <span class="relative mt-6 text-sm font-medium text-text-primary">
+              Visiter le site
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

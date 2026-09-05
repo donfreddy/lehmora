@@ -1,0 +1,72 @@
+---
+const metrics = [
+  { value: "3", label: "Produits SaaS" },
+  { value: "4+", label: "Secteurs" },
+  { value: "99.9%", label: "SLA target" },
+];
+---
+
+<section id="top" class="relative overflow-hidden">
+  <div
+    class="relative mx-auto max-w-5xl border-surface-border px-6 md:border-x"
+  >
+    <div class="relative mx-auto max-w-4xl pb-24 pt-24 text-center sm:pt-32">
+      <span
+        class="animate-rise inline-flex items-center gap-2 rounded-full border border-solid!! border-surface-border bg-surface px-3 py-1 font-mono text-[11px] tracking-wide text-text-secondary"
+      >
+        EST. 2025 • VENTURE STUDIO
+      </span>
+
+      <h1
+        class="animate-rise mt-6 text-balance text-4xl font-semibold tracking-tight text-text-primary sm:text-5xl md:text-6xl"
+        style="animation-delay: 90ms"
+      >
+        Architectures <span class="gradient-text"
+          >financières et logicielles</span
+        > de demain.
+      </h1>
+
+      <p
+        class="animate-rise mx-auto mt-6 max-w-xl text-balance text-base leading-relaxed text-text-secondary sm:text-lg"
+        style="animation-delay: 180ms"
+      >
+        Nous concevons des infrastructures SaaS souveraines pour les marchés
+        émergents — pensées pour durer, pas pour un cycle de levée.
+      </p>
+
+      <div
+        class="animate-rise mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        style="animation-delay: 270ms"
+      >
+        <a
+          href="#portfolio"
+          class="w-full rounded-md bg-lehmora px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-lehmora/90 sm:w-auto"
+        >
+          Explorer le portfolio
+        </a>
+        <a
+          href="#contact"
+          class="w-full rounded-md border border-solid! border-surface-border px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:border-text-muted sm:w-auto"
+        >
+          Contacter le studio
+        </a>
+      </div>
+
+      <dl
+        class="animate-rise mx-auto mt-16 grid max-w-lg grid-cols-3 divide-x divide-surface-border border-y border-surface-border"
+        style="animation-delay: 360ms"
+      >
+        {
+          metrics.map((metric) => (
+            <div class="flex flex-col items-center gap-1 px-4 py-5">
+              <dt class="order-2 text-xs text-text-muted">{metric.label}</dt>
+              <dd class="order-1 font-mono text-2xl font-medium text-text-primary sm:text-3xl">
+                {metric.value}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

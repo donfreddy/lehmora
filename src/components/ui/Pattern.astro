@@ -1,0 +1,16 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["screen-line-before screen-line-after relative h-10 w-full overflow-hidden", className]}>
+	<div
+		class="pointer-events-none absolute inset-y-0 left-[-100vw] w-[200vw] opacity-40"
+		style="background-image: radial-gradient(var(--color-surface-border) 1px, transparent 1px); background-size: 16px 16px;"
+	>
+	</div>
+	<div class="mx-auto hidden h-full max-w-5xl border-x border-surface-border md:block"></div>
+</div>
