@@ -1,5 +1,6 @@
 ---
 import { products } from "../data/products";
+import logo from "../assets/logo.svg";
 
 const legalLinks = [
   { label: "Confidentialité", href: "/privacy" },
@@ -27,11 +28,13 @@ const socialLinks = [
     >
       <div class="max-w-xs">
         <div class="flex items-center gap-2.5">
-          <span
-            class="flex h-7 w-7 items-center justify-center rounded-md border border-solid!! border-surface-border bg-surface shadow-[0_0_12px_var(--color-lehmora-glow)]"
-          >
-            <span class="h-2 w-2 rounded-sm bg-lehmora"></span>
-          </span>
+          <img
+            src={logo.src}
+            alt=""
+            width="28"
+            height="28"
+            class="h-7 w-7 rounded-md"
+          />
           <span
             class="text-[15px] font-semibold tracking-tight text-text-primary"
             >Lehmora Labs</span

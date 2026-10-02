@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { products } from "../../data/products";
+import logo from "../../assets/logo.svg";
 
 const NAV_LINKS = [{ label: "À propos", href: "#about" }];
 
@@ -47,9 +48,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-surface-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between border-surface-border px-6 md:border-x">
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md border border-solid! border-surface-border bg-surface shadow-[0_0_12px_var(--color-lehmora-glow)]">
-            <span className="h-2 w-2 rounded-sm bg-lehmora" />
-          </span>
+          <img src={logo.src} alt="" className="h-7 w-7 rounded-md" />
           <span className="text-[15px] font-semibold tracking-tight text-text-primary">
             Lehmora Labs
           </span>
@@ -197,7 +196,10 @@ export default function Header() {
                   className="fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col overflow-y-auto border-l border-surface-border bg-surface p-6 lg:hidden"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-text-primary">Lehmora Labs</span>
+                    <span className="flex items-center gap-2">
+                      <img src={logo.src} alt="" className="h-6 w-6 rounded-md" />
+                      <span className="text-sm font-semibold text-text-primary">Lehmora Labs</span>
+                    </span>
                     <button
                       type="button"
                       onClick={() => setMobileOpen(false)}
