@@ -56,4 +56,16 @@ export const products: Product[] = [
     url: "https://payskool.vercel.app",
     accent: "var(--color-payskool)",
   },
+  {
+    slug: "marge",
+    name: "Marge",
+    category: "Personal Finance & Decision Engine — B2C",
+    status: "dev",
+    statusLabel: statusLabels.dev,
+    focus: "Local-First Spending Decision Engine",
+    pitch: "Le moteur de décision financière 100% local-first. Calcule la marge réelle avant chaque achat et simule son impact, sans jamais synchroniser la moindre donnée bancaire.",
+    menuDescription: "Decision engine financier local-first, sans synchronisation bancaire.",
+    url: "https://marge-landing.vercel.app",
+    accent: "var(--color-marge)",
+  },
 ];
