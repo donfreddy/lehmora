@@ -51,7 +51,7 @@ export const products: Product[] = [
     status: "dev",
     statusLabel: statusLabels.dev,
     focus: "SaaS de recouvrement & gestion scolaire",
-    pitch: "Le recouvrement des frais scolaires automatisé, pour que les écoles encaissent sans harceler les familles.",
+    pitch: "Le recouvrement des frais scolaires orchestré, sans jamais transiter par nous. Les écoles encaissent directement, sans harceler les familles.",
     menuDescription: "SaaS B2B de gestion et recouvrement des frais scolaires.",
     url: "https://payskool.vercel.app",
     accent: "var(--color-payskool)",
