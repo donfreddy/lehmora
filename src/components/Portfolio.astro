@@ -30,16 +30,20 @@ import { products } from "../data/products";
             />
 
             <div class="relative flex items-center justify-between">
-              <span
-                class="inline-flex items-center gap-1.5 rounded-full border border-solid! border-surface-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide"
-                style="color: var(--accent)"
-              >
+              {product.status === "live" ? (
                 <span
-                  class="h-1.5 w-1.5 rounded-full"
-                  style="background-color: var(--accent)"
-                />
-                {product.statusLabel}
-              </span>
+                  class="inline-flex items-center gap-1.5 rounded-full border border-solid! px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wide"
+                  style="color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: color-mix(in srgb, var(--accent) 35%, transparent)"
+                >
+                  <span class="h-1.5 w-1.5 rounded-full" style="background-color: var(--accent)" />
+                  {product.statusLabel}
+                </span>
+              ) : (
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-solid! border-surface-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-text-muted">
+                  <span class="h-1.5 w-1.5 rounded-full bg-text-muted" />
+                  {product.statusLabel}
+                </span>
+              )}
               <ArrowUpRight
                 size={16}
                 className="text-text-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
