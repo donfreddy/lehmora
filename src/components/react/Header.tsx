@@ -5,23 +5,23 @@ import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { products } from "../../data/products";
 import logo from "../../assets/logo-dark.png";
 
-const NAV_LINKS = [{ label: "À propos", href: "#about" }];
+const NAV_LINKS = [{ label: "À propos", href: "/#about" }];
 
 const GOVERNANCE_ITEMS = [
   {
     label: "Vision",
     description: "Notre horizon à 50 ans pour l'économie émergente.",
-    href: "#vision",
+    href: "/#vision",
   },
   {
     label: "Mission",
     description: "Éditer, mutualiser et pérenniser nos infrastructures SaaS.",
-    href: "#mission",
+    href: "/#mission",
   },
   {
     label: "Valeurs",
     description: "Les quatre principes d'ingénierie non négociables.",
-    href: "#valeurs",
+    href: "/#valeurs",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-surface-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between border-surface-border px-6 md:border-x">
-        <a href="#top" className="flex items-center gap-2.5">
+        <a href="/#top" className="flex items-center gap-2.5">
           <img src={logo.src} alt="" className="h-6 w-6 rounded-md" />
           <span className="text-[15px] font-semibold tracking-tight text-text-primary">
             Lehmora Labs
@@ -227,7 +227,7 @@ export default function Header() {
 
                   <div className="mt-8 flex flex-col gap-1">
                     <a
-                      href="#about"
+                      href="/#about"
                       onClick={() => setMobileOpen(false)}
                       className="rounded-lg px-3 py-3 text-[15px] text-text-primary hover:bg-background"
                     >
