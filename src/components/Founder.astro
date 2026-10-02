@@ -1,4 +1,6 @@
 ---
+import { ArrowUpRight } from "lucide-react";
+
 const proofPoints = [
   {
     label: "6+ ans",
@@ -6,7 +8,8 @@ const proofPoints = [
   },
   {
     label: "Meragix",
-    text: "Écosystème open-source créé et maintenu.",
+    text: "4 packages open-source, 500+ téléchargements depuis 2026.",
+    href: "https://github.com/meragix",
   },
   {
     label: "4 produits",
@@ -34,27 +37,49 @@ const proofPoints = [
         </p>
 
         <p class="mt-6 max-w-lg text-[15px] leading-relaxed text-text-secondary">
-          6 ans à concevoir des systèmes résilients m'ont appris une chose :
-          la dette technique et le code jetable sont des taxes sur la
-          croissance africaine. J'ai fondé Lehmora Labs pour arrêter de
-          subir des infrastructures fragiles. Nous ne codons pas de simples
-          applications ; nous construisons l'infrastructure dont nos
-          communautés auront besoin demain.
+          Lors d'une tontine à Douala, une coupure réseau a doublé une
+          transaction de 150 000 FCFA à la remise du pot. Deux heures de
+          tension pour recompter des billets et prouver la bonne foi du
+          trésorier. Ce soir-là, j'ai compris qu'en finance communautaire, la
+          confiance ne tolère aucun bug. J'ai réécrit le moteur de Tallyno
+          autour d'un grand livre à double entrée immuable. Lehmora Labs est
+          né de ces nuits-là, pour que nos communautés n'aient plus jamais à
+          subir une infrastructure fragile.
         </p>
       </div>
 
       <dl class="grid grid-cols-2 gap-6 self-start sm:gap-8 md:grid-cols-1">
         {
-          proofPoints.map((point) => (
-            <div class="border-t border-solid! border-surface-border pt-3">
-              <dt class="font-mono text-sm font-medium text-text-primary">
-                {point.label}
-              </dt>
-              <dd class="mt-1 text-xs leading-relaxed text-text-muted">
-                {point.text}
-              </dd>
-            </div>
-          ))
+          proofPoints.map((point) =>
+            point.href ? (
+              <a
+                href={point.href}
+                target="_blank"
+                rel="noreferrer"
+                class="group block border-t border-solid! border-surface-border pt-3 transition-colors"
+              >
+                <dt class="flex items-center gap-1 font-mono text-sm font-medium text-text-primary">
+                  {point.label}
+                  <ArrowUpRight
+                    size={12}
+                    className="text-text-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </dt>
+                <dd class="mt-1 text-xs leading-relaxed text-text-muted">
+                  {point.text}
+                </dd>
+              </a>
+            ) : (
+              <div class="border-t border-solid! border-surface-border pt-3">
+                <dt class="font-mono text-sm font-medium text-text-primary">
+                  {point.label}
+                </dt>
+                <dd class="mt-1 text-xs leading-relaxed text-text-muted">
+                  {point.text}
+                </dd>
+              </div>
+            ),
+          )
         }
       </dl>
     </div>

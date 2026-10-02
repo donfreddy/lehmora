@@ -18,7 +18,7 @@ const studioLinks = [
 const socialLinks = [
   { label: "X (Twitter)", href: "#" },
   { label: "LinkedIn", href: "#" },
-  { label: "GitHub", href: "#" },
+  { label: "GitHub", href: "https://github.com/lehmora" },
 ];
 ---
 
@@ -44,6 +44,8 @@ const socialLinks = [
         <div class="mt-5 flex items-center gap-3">
           <a
             href={socialLinks[0].href}
+            target="_blank"
+            rel="noreferrer"
             aria-label={socialLinks[0].label}
             class="flex h-8 w-8 items-center justify-center rounded-lg border border-solid! border-surface-border text-text-muted transition-colors hover:text-text-primary"
           >
@@ -55,6 +57,8 @@ const socialLinks = [
           </a>
           <a
             href={socialLinks[1].href}
+            target="_blank"
+            rel="noreferrer"
             aria-label={socialLinks[1].label}
             class="flex h-8 w-8 items-center justify-center rounded-lg border border-solid! border-surface-border text-text-muted transition-colors hover:text-text-primary"
           >
@@ -66,6 +70,8 @@ const socialLinks = [
           </a>
           <a
             href={socialLinks[2].href}
+            target="_blank"
+            rel="noreferrer"
             aria-label={socialLinks[2].label}
             class="flex h-8 w-8 items-center justify-center rounded-lg border border-solid! border-surface-border text-text-muted transition-colors hover:text-text-primary"
           >
