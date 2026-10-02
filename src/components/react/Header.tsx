@@ -5,7 +5,10 @@ import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { products } from "../../data/products";
 import logo from "../../assets/logo-dark.png";
 
-const NAV_LINKS = [{ label: "À propos", href: "/#about" }];
+const NAV_LINKS = [
+  { label: "À propos", href: "/#about" },
+  { label: "Fondateur", href: "/#founder" },
+];
 
 const GOVERNANCE_ITEMS = [
   {
@@ -226,13 +229,16 @@ export default function Header() {
                   </div>
 
                   <div className="mt-8 flex flex-col gap-1">
-                    <a
-                      href="/#about"
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-[15px] text-text-primary hover:bg-background"
-                    >
-                      À propos
-                    </a>
+                    {NAV_LINKS.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="rounded-lg px-3 py-3 text-[15px] text-text-primary hover:bg-background"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
                     <p className="mt-4 px-3 font-mono text-[11px] uppercase tracking-wider text-text-muted">
                       Gouvernance
                     </p>

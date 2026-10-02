@@ -1,0 +1,61 @@
+---
+const proofPoints = [
+  {
+    label: "6+ ans",
+    text: "Ingénierie full-stack & architecture système.",
+  },
+  {
+    label: "Meragix",
+    text: "Écosystème open-source créé et maintenu.",
+  },
+  {
+    label: "4 produits",
+    text: "Fintech, EdTech & Consumer, un socle technique unique.",
+  },
+  {
+    label: "Stack",
+    text: "Dart/Flutter, Go, TypeScript, Clean Architecture.",
+  },
+];
+---
+
+<section id="founder" class="scroll-mt-20">
+  <div class="mx-auto max-w-5xl border-surface-border px-6 py-24 md:border-x">
+    <div class="grid gap-12 md:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-wider text-lehmora">
+          Fondateur
+        </p>
+        <h2 class="mt-3 text-balance text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl">
+          Freddy Tamwo
+        </h2>
+        <p class="mt-1 font-mono text-xs text-text-muted">
+          Founder & Chief System Architect
+        </p>
+
+        <p class="mt-6 max-w-lg text-[15px] leading-relaxed text-text-secondary">
+          Architecte logiciel et ingénieur système. Je conçois et j'opère
+          l'infrastructure et la suite de produits Lehmora Labs, avec un
+          objectif : transformer des problèmes complexes de finance, de
+          gestion et d'éducation en logiciels souverains, performants et
+          taillés pour durer.
+        </p>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-6 self-start sm:gap-8 md:grid-cols-1">
+        {
+          proofPoints.map((point) => (
+            <div class="border-t border-solid! border-surface-border pt-3">
+              <dt class="font-mono text-sm font-medium text-text-primary">
+                {point.label}
+              </dt>
+              <dd class="mt-1 text-xs leading-relaxed text-text-muted">
+                {point.text}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
