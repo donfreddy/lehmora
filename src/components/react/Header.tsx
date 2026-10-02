@@ -3,15 +3,27 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { products } from "../../data/products";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo-dark.png";
 
 const NAV_LINKS = [{ label: "À propos", href: "#about" }];
 
-const GOVERNANCE_ITEM = {
-  label: "Vision, Mission & Valeurs",
-  description: "Notre thèse à 99 ans et les principes qui l'accompagnent.",
-  href: "#dna",
-};
+const GOVERNANCE_ITEMS = [
+  {
+    label: "Vision",
+    description: "Notre horizon à 50 ans pour l'économie émergente.",
+    href: "#vision",
+  },
+  {
+    label: "Mission",
+    description: "Éditer, mutualiser et pérenniser nos infrastructures SaaS.",
+    href: "#mission",
+  },
+  {
+    label: "Valeurs",
+    description: "Les quatre principes d'ingénierie non négociables.",
+    href: "#valeurs",
+  },
+];
 
 type MenuKey = "governance" | "portfolio" | null;
 
@@ -48,7 +60,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-surface-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between border-surface-border px-6 md:border-x">
         <a href="#top" className="flex items-center gap-2.5">
-          <img src={logo.src} alt="" className="h-7 w-7 rounded-md" />
+          <img src={logo.src} alt="" className="h-6 w-6 rounded-md" />
           <span className="text-[15px] font-semibold tracking-tight text-text-primary">
             Lehmora Labs
           </span>
@@ -87,16 +99,19 @@ export default function Header() {
                   transition={{ duration: 0.15, ease: "easeOut" }}
                   className="absolute left-0 top-full mt-2 w-72 rounded-xl border border-solid! border-surface-border bg-surface p-1.5 shadow-xl shadow-black/40"
                 >
-                  <a
-                    href={GOVERNANCE_ITEM.href}
-                    onClick={() => setOpenMenu(null)}
-                    className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-background"
-                  >
-                    <span className="block text-sm text-text-primary">{GOVERNANCE_ITEM.label}</span>
-                    <span className="mt-0.5 block text-xs leading-relaxed text-text-muted">
-                      {GOVERNANCE_ITEM.description}
-                    </span>
-                  </a>
+                  {GOVERNANCE_ITEMS.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setOpenMenu(null)}
+                      className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-background"
+                    >
+                      <span className="block text-sm text-text-primary">{item.label}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-text-muted">
+                        {item.description}
+                      </span>
+                    </a>
+                  ))}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -218,13 +233,22 @@ export default function Header() {
                     >
                       À propos
                     </a>
-                    <a
-                      href={GOVERNANCE_ITEM.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-lg px-3 py-3 text-[15px] text-text-primary hover:bg-background"
-                    >
+                    <p className="mt-4 px-3 font-mono text-[11px] uppercase tracking-wider text-text-muted">
                       Gouvernance
-                    </a>
+                    </p>
+                    {GOVERNANCE_ITEMS.map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="rounded-lg px-3 py-3 hover:bg-background"
+                      >
+                        <span className="block text-[15px] text-text-primary">{item.label}</span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-text-muted">
+                          {item.description}
+                        </span>
+                      </a>
+                    ))}
 
                     <p className="mt-4 px-3 font-mono text-[11px] uppercase tracking-wider text-text-muted">
                       Portfolio

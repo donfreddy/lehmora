@@ -23,7 +23,7 @@ export const products: Product[] = [
   {
     slug: "famsub",
     name: "Famsub",
-    category: "Consumer & Digital Economy — B2C",
+    category: "Consumer & Digital Economy: B2C",
     status: "live",
     statusLabel: statusLabels.live,
     focus: "Marketplace & Escrow System",
@@ -35,7 +35,7 @@ export const products: Product[] = [
   {
     slug: "tallyno",
     name: "Tallyno",
-    category: "Community & Non-Custodial Finance — P2P",
+    category: "Community & Non-Custodial Finance: P2P",
     status: "beta",
     statusLabel: statusLabels.beta,
     focus: "Social Expense & Tontine Engine",
@@ -47,7 +47,7 @@ export const products: Product[] = [
   {
     slug: "payskool",
     name: "Payskool",
-    category: "Institutional & Education Tech — B2B",
+    category: "Institutional & Education Tech: B2B",
     status: "dev",
     statusLabel: statusLabels.dev,
     focus: "SaaS de Recouvrement & Gestion Scolaire",
@@ -59,7 +59,7 @@ export const products: Product[] = [
   {
     slug: "marge",
     name: "Marge",
-    category: "Personal Finance & Decision Engine — B2C",
+    category: "Personal Finance & Decision Engine: B2C",
     status: "dev",
     statusLabel: statusLabels.dev,
     focus: "Local-First Spending Decision Engine",
