@@ -1,8 +1,4 @@
 ---
-const metrics = [
-  { value: "4", label: "Produits SaaS" },
-  { value: "4+", label: "Secteurs" },
-];
 ---
 
 <section id="top" class="relative overflow-hidden">
@@ -29,10 +25,10 @@ const metrics = [
         class="animate-rise mx-auto mt-6 max-w-xl text-base leading-relaxed font-light text-text-secondary sm:text-lg"
         style="animation-delay: 180ms"
       >
-        Lehmora Labs est le venture studio qui bâtit l'infrastructure
-        financière des marchés émergents, des tontines aux frais scolaires.
-        Nous remplaçons les prototypes éphémères par des logiciels
-        souverains, pensés pour tourner les 100 prochaines années.
+        Lehmora Labs bâtit l'infrastructure financière des marchés émergents :
+        tontines, frais scolaires, abonnements partagés, décisions du
+        quotidien. Des logiciels souverains, conçus pour tenir la charge
+        plutôt que la démo.
       </p>
 
       <div
@@ -52,22 +48,6 @@ const metrics = [
           Contacter le studio
         </a>
       </div>
-
-      <dl
-        class="animate-rise mx-auto mt-16 grid max-w-sm grid-cols-2 divide-x divide-solid! divide-surface-border border-y border-solid! border-surface-border"
-        style="animation-delay: 360ms"
-      >
-        {
-          metrics.map((metric) => (
-            <div class="flex flex-col items-center gap-1 px-4 py-5">
-              <dt class="order-2 text-xs text-text-muted">{metric.label}</dt>
-              <dd class="order-1 font-mono text-2xl font-medium text-text-primary sm:text-3xl">
-                {metric.value}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
     </div>
   </div>
 </section>
