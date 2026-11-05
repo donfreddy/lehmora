@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1170" height="2532" viewBox="0 0 1170 2532">
+  <!-- PLACEHOLDER. Replace with a real screenshot (1170 x 2532 px, PNG or WebP),
+       then update the matching "src" in src/data/products.ts. -->
+  <defs>
+    <pattern id="rule" width="1170" height="96" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="95" x2="1170" y2="95" stroke="#bacbb1" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1170" height="2532" fill="#e2ebda"/>
+  <rect width="1170" height="2532" fill="url(#rule)"/>
+  <rect x="40" y="40" width="1090" height="2452" fill="none" stroke="#44594b" stroke-width="6" stroke-dasharray="28 20"/>
+  <g font-family="Archivo, Helvetica, Arial, sans-serif" fill="#13261b" text-anchor="middle">
+    <text x="585" y="1080" font-size="64" font-weight="700">Capture Tallyno</text>
+    <text x="585" y="1180" font-size="52">Écran : le tour en cours</text>
+    <text x="585" y="1300" font-size="40" fill="#44594b">tontine_group_page, onglet Tour</text>
+    <text x="585" y="1420" font-size="44" fill="#1d5e3b" font-weight="600">1170 × 2532 px</text>
+    <text x="585" y="1500" font-size="34" fill="#44594b">public/screens/tallyno-round.svg</text>
+  </g>
+</svg>
