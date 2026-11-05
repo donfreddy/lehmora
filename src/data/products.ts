@@ -30,7 +30,7 @@ export const products: Product[] = [
   {
     slug: "tallyno",
     name: "Tallyno",
-    url: "https://tallyno-landing.vercel.app",
+    url: "https://tallyno.lehmora.com",
     status: "dev",
     holdsFunds: false,
     listed: true,
