@@ -1,53 +1,97 @@
 ---
+import LedgerSheet from "./LedgerSheet.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).hero;
 ---
 
-<section id="top" class="relative overflow-hidden">
-  <div
-    class="relative mx-auto max-w-5xl border-surface-border px-6 md:border-x"
-  >
-    <div class="relative mx-auto max-w-4xl pb-24 pt-24 text-center sm:pt-32">
-      <span
-        class="animate-rise inline-flex items-center gap-2 rounded-full border border-solid! border-surface-border bg-surface px-3 py-1 font-mono text-[11px] tracking-wide text-text-secondary"
-      >
-        VENTURE STUDIO • DOUALA
-      </span>
+<section class="hero" aria-labelledby="hero-title">
+	<div class="frame hero__grid">
+		<div class="hero__text">
+			<h1 id="hero-title" class="hero__title">{t.title}</h1>
+			<p class="hero__lead">{t.lead}</p>
+			<div class="hero__actions">
+				<a class="btn btn--solid" href="#products">{t.ctaPrimary}</a>
+				<a class="btn btn--ghost" href="mailto:contact@lehmora.com">{t.ctaSecondary}</a>
+			</div>
+		</div>
 
-      <h1
-        class="animate-rise mt-6 text-balance text-4xl font-semibold tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl"
-        style="animation-delay: 90ms"
-      >
-        Orchestrer la finance communautaire <span class="gradient-text"
-          >sans devenir la banque</span
-        >.
-      </h1>
-
-      <p
-        class="animate-rise mx-auto mt-6 max-w-xl text-base leading-relaxed font-light text-text-secondary sm:text-lg"
-        style="animation-delay: 180ms"
-      >
-        Lehmora Labs bâtit l'infrastructure de confiance des marchés
-        émergents : de la tontine (Tallyno) au paiement scolaire (Payskool).
-        Nos moteurs orchestrent, tracent et prouvent chaque flux financier,
-        sans porter le risque d'une banque.
-      </p>
-
-      <div
-        class="animate-rise mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-        style="animation-delay: 270ms"
-      >
-        <a
-          href="#portfolio"
-          class="w-full rounded-md bg-lehmora px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-lehmora/90 sm:w-auto"
-        >
-          Explorer le portfolio
-        </a>
-        <a
-          href="#contact"
-          class="w-full rounded-md border border-solid! border-surface-border px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:border-text-muted sm:w-auto"
-        >
-          Contacter le studio
-        </a>
-      </div>
-    </div>
-  </div>
+		<div class="hero__sheet">
+			<LedgerSheet lang={lang} />
+		</div>
+	</div>
 </section>
+
+<style>
+	.hero {
+		padding-block: 3rem 4.5rem;
+	}
+
+	.hero__grid {
+		display: grid;
+		gap: 3rem;
+		align-items: start;
+	}
+
+	/* The headline is written on the register's rulings: one ruled line per line of text. */
+	.hero__title {
+		--lh: 1.08em;
+		max-width: 15ch;
+		font-size: clamp(2.6rem, 1.2rem + 5.2vw, 5.4rem);
+		font-weight: 800;
+		font-stretch: 70%;
+		line-height: var(--lh);
+		letter-spacing: -0.015em;
+		text-wrap: balance;
+		background-image: repeating-linear-gradient(
+			to bottom,
+			transparent 0,
+			transparent calc(var(--lh) - 2px),
+			var(--color-rule) calc(var(--lh) - 2px),
+			var(--color-rule) var(--lh)
+		);
+		padding-bottom: 0.08em;
+	}
+
+	.hero__lead {
+		max-width: 36rem;
+		margin-top: 1.75rem;
+		font-family: var(--font-serif);
+		font-size: clamp(1.1rem, 1rem + 0.35vw, 1.25rem);
+		line-height: 1.6;
+		color: var(--color-ink-2);
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2.25rem;
+	}
+
+	@media (max-width: 30rem) {
+		.hero__actions .btn {
+			flex: 1 1 100%;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.hero {
+			padding-block: 5.5rem 6.5rem;
+		}
+
+		.hero__grid {
+			grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+			gap: 4.5rem;
+		}
+
+		.hero__sheet {
+			padding-top: 0.6rem;
+		}
+	}
+</style>

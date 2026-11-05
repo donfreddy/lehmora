@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteHeader from "./SiteHeader.astro";
+import Hero from "./Hero.astro";
+import Origin from "./Origin.astro";
+import Statement from "./Statement.astro";
+import Custody from "./Custody.astro";
+import Rules from "./Rules.astro";
+import Infra from "./Infra.astro";
+import Products from "./Products.astro";
+import Status from "./Status.astro";
+import Footer from "./Footer.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).meta;
+---
+
+<Layout
+	lang={lang}
+	title={t.title}
+	description={t.description}
+	ogImage={t.ogImage}
+	ogImageAlt={t.ogImageAlt}
+	ogLocale={t.ogLocale}
+	alternates={{ fr: "/", en: "/en/" }}
+>
+	<a class="skip-link" href="#main">{t.skip}</a>
+	<SiteHeader lang={lang} />
+	<main id="main">
+		<Hero lang={lang} />
+		<Origin lang={lang} />
+		<Statement lang={lang} />
+		<Custody lang={lang} />
+		<Rules lang={lang} />
+		<Infra lang={lang} />
+		<Products lang={lang} />
+		<Status lang={lang} />
+	</main>
+	<Footer lang={lang} />
+</Layout>

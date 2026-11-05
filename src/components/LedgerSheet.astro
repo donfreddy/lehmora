@@ -1,0 +1,285 @@
+---
+import { sampleRound } from "../data/products";
+import { fill, formatAmount, formatDay, getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).hero.ledger;
+const r = sampleRound;
+
+const amount = (value: number) => formatAmount(lang, value);
+const contributors = r.members.length;
+const expected = r.share * contributors;
+const unpaid = r.members.filter((m) => m.paidOn === null).length * r.share;
+const paidOut = expected - unpaid;
+
+// Row timing for the single page-load sequence (see .ink in styles).
+const rowDelay = (index: number) => `--i: ${index}`;
+const totalsStart = contributors + 1;
+---
+
+<figure class="ledger">
+<div class="sheet">
+	<div class="sheet__head">
+		<p class="sheet__group">
+			<span>{r.group}</span>
+			<span class="sheet__round">{fill(t.cycle, { cycle: r.cycle })}, {fill(t.round, { round: r.round, rounds: r.rounds })}</span>
+		</p>
+		<dl class="sheet__meta">
+			<div><dt>{t.due}</dt><dd>{formatDay(lang, r.dueDate)}</dd></div>
+			<div>
+				<dt>{t.closed}</dt>
+				<dd>{formatDay(lang, r.closedOn)}, {fill(t.closedNote, { days: r.graceDays })}</dd>
+			</div>
+			<div><dt>{t.share}</dt><dd>{amount(r.share)} XAF</dd></div>
+			<div><dt>{t.beneficiary}</dt><dd>{r.beneficiary}</dd></div>
+		</dl>
+	</div>
+
+	<table class="sheet__table">
+		<thead>
+			<tr>
+				<th scope="col">{t.member}</th>
+				<th scope="col">{t.paidOn}</th>
+				<th scope="col" class="num">{t.received}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				r.members.map((member, index) => {
+					const late = member.paidOn === null;
+					return (
+						<tr class:list={["ink", { "is-debit": late }]} style={rowDelay(index)}>
+							<th scope="row">{member.name}</th>
+							<td>{late ? t.unpaid : formatDay(lang, member.paidOn)}</td>
+							<td class="num">{amount(late ? 0 : r.share)}</td>
+						</tr>
+					);
+				})
+			}
+		</tbody>
+	</table>
+
+	<dl class="sheet__totals">
+		<div class="ink" style={rowDelay(totalsStart)}>
+			<dt>{fill(t.expected, { count: contributors, share: amount(r.share) })}</dt>
+			<dd class="num">{amount(expected)}</dd>
+		</div>
+		<div class="ink sheet__subtotal" style={rowDelay(totalsStart + 1)}>
+			<dt>{fill(t.paidOut, { name: r.beneficiary })}</dt>
+			<dd class="num">{amount(paidOut)}</dd>
+		</div>
+		<div class="ink is-debit" style={rowDelay(totalsStart + 2)}>
+			<dt>
+				{fill(t.debt, { name: r.defaulter })}
+				<span class="sheet__note">{t.debtNote}</span>
+			</dt>
+			<dd class="num">{amount(unpaid)}</dd>
+		</div>
+		<div class="ink sheet__held" style={rowDelay(totalsStart + 3.5)}>
+			<dt>{t.held}</dt>
+			<dd class="num"><span class="sheet__zero">0 XAF</span></dd>
+		</div>
+	</dl>
+
+	<p class="sheet__settlement ink" style={rowDelay(totalsStart + 5)}>{t.settlement}</p>
+</div>
+	<figcaption class="sheet-caption">{t.caption}</figcaption>
+</figure>
+
+<style>
+	.sheet {
+		background: var(--color-sheet);
+		border: 1px solid var(--color-rule-strong);
+		font-size: 0.92rem;
+	}
+
+	.sheet__head {
+		padding: 0.9rem 1rem 0.85rem;
+		background: var(--color-ink);
+		color: var(--color-paper);
+	}
+
+	.sheet__group {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.1rem 1rem;
+		font-weight: 700;
+		font-stretch: 85%;
+		font-size: 1.02rem;
+	}
+
+	.sheet__round {
+		font-weight: 500;
+		color: color-mix(in srgb, var(--color-paper) 80%, transparent);
+	}
+
+	.sheet__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.15rem 1.1rem;
+		margin-top: 0.35rem;
+		font-size: 0.82rem;
+		color: color-mix(in srgb, var(--color-paper) 72%, transparent);
+	}
+
+	.sheet__meta div {
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.sheet__meta dd {
+		color: var(--color-paper);
+	}
+
+	.sheet__table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.sheet__table th,
+	.sheet__table td {
+		padding: 0.42rem 1rem;
+		border-bottom: 1px solid var(--color-rule);
+		text-align: left;
+		font-weight: 400;
+	}
+
+	.sheet__table thead th {
+		padding-block: 0.55rem 0.45rem;
+		font-size: 0.78rem;
+		font-weight: 600;
+		color: var(--color-ink-2);
+		border-bottom: 1px solid var(--color-rule-strong);
+	}
+
+	/* Columnar pad: vertical rulings in front of the money columns. */
+	.sheet__table td,
+	.sheet__table thead th:not(:first-child) {
+		border-left: 1px solid var(--color-rule);
+	}
+
+	.num,
+	.sheet__table .num {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.is-debit,
+	.is-debit th,
+	.is-debit td {
+		color: var(--color-debit);
+	}
+
+	.sheet__totals {
+		padding: 0.4rem 0 0.2rem;
+	}
+
+	.sheet__totals > div {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 0.38rem 1rem;
+	}
+
+	.sheet__subtotal dd {
+		border-top: 1px solid var(--color-ink);
+		padding-top: 0.2rem;
+	}
+
+	.sheet__note {
+		display: block;
+		font-size: 0.8rem;
+	}
+
+	.sheet__held {
+		margin-top: 0.4rem;
+		font-weight: 700;
+		font-size: 1.02rem;
+	}
+
+	/* Accounting convention: a double underline closes a final total. */
+	.sheet__zero {
+		position: relative;
+		display: inline-block;
+		padding-bottom: 0.3rem;
+	}
+
+	.sheet__zero::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 4px;
+		border-top: 1.5px solid currentColor;
+		border-bottom: 1.5px solid currentColor;
+		transform-origin: left;
+	}
+
+	.sheet__settlement {
+		margin: 0.6rem 1rem 0;
+		padding: 0.6rem 0 0.9rem;
+		border-top: 1px dashed var(--color-rule-strong);
+		font-size: 0.8rem;
+		color: var(--color-ink-2);
+	}
+
+	.sheet-caption {
+		margin-top: 0.75rem;
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 0.92rem;
+		color: var(--color-ink-2);
+	}
+
+	/* The one orchestrated motion on the page: the round is written in, line by line. */
+	@media (prefers-reduced-motion: no-preference) {
+		/* Cells, not rows: clip-path on <tr> is unreliable across engines. */
+		tr.ink > *,
+		div.ink,
+		p.ink {
+			animation: write 0.5s cubic-bezier(0.3, 0.6, 0.2, 1) both;
+			animation-delay: calc(500ms + var(--i) * 140ms);
+		}
+
+		tr.ink > :nth-child(2) {
+			animation-delay: calc(560ms + var(--i) * 140ms);
+		}
+
+		tr.ink > :nth-child(3) {
+			animation-delay: calc(620ms + var(--i) * 140ms);
+		}
+
+		.sheet__zero::after {
+			animation: rule 0.45s ease-out both;
+			animation-delay: calc(500ms + 12.5 * 140ms + 300ms);
+		}
+	}
+
+	@keyframes write {
+		from {
+			clip-path: inset(0 100% 0 0);
+			opacity: 0.2;
+		}
+		to {
+			clip-path: inset(0 0 0 0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes rule {
+		from {
+			transform: scaleX(0);
+		}
+		to {
+			transform: scaleX(1);
+		}
+	}
+</style>

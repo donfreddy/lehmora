@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "./react/Header";
+import SiteHeader from "./SiteHeader.astro";
 import Footer from "./Footer.astro";
 
 interface Props {
@@ -11,58 +11,89 @@ interface Props {
 const { title, updated } = Astro.props;
 ---
 
-<Layout title={`${title} · Lehmora Labs`} description={title}>
-	<Header client:load />
-	<main class="mx-auto max-w-2xl px-6 py-20">
-		<a href="/" class="text-sm text-text-secondary transition-colors hover:text-text-primary">
-			← Retour à l'accueil
-		</a>
+<Layout lang="fr" title={`${title}, Lehmora Labs`} description={`${title} du site lehmora.com.`}>
+	<a class="skip-link" href="#main">Aller au contenu</a>
+	<SiteHeader lang="fr" />
+	<main id="main" class="frame legal">
+		<a href="/" class="legal__back link">Retour à l’accueil</a>
+		<h1>{title}</h1>
+		<p class="legal__updated">Dernière mise à jour&nbsp;: {updated}</p>
 
-		<h1 class="mt-6 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
-			{title}
-		</h1>
-		<p class="mt-3 font-mono text-xs text-text-muted">Dernière mise à jour : {updated}</p>
-
-		<div class="legal-content mt-12 text-[15px] leading-relaxed text-text-secondary">
+		<div class="legal__content">
 			<slot />
 		</div>
 	</main>
-	<Footer />
+	<Footer lang="fr" />
 </Layout>
 
 <style>
-	.legal-content :global(h2) {
-		margin-top: 2.5rem;
-		margin-bottom: 0.75rem;
-		font-size: 1.125rem;
-		font-weight: 600;
-		color: var(--color-text-primary);
+	.legal {
+		max-width: 46rem;
+		padding-block: 4rem 6rem;
 	}
-	.legal-content :global(h2:first-child) {
+
+	.legal__back {
+		font-size: 0.95rem;
+		color: var(--color-ink-2);
+	}
+
+	h1 {
+		margin-top: 1.5rem;
+		font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem);
+		font-weight: 780;
+		font-stretch: 75%;
+		line-height: 1.04;
+	}
+
+	.legal__updated {
+		margin-top: 0.75rem;
+		font-size: 0.9rem;
+		color: var(--color-ink-2);
+		padding-bottom: 1.5rem;
+		border-bottom: 1.5px solid var(--color-ink);
+	}
+
+	.legal__content {
+		margin-top: 2.5rem;
+		font-family: var(--font-serif);
+		font-size: 1.08rem;
+		line-height: 1.7;
+	}
+
+	.legal__content :global(h2) {
+		margin-top: 2.75rem;
+		margin-bottom: 0.5rem;
+		font-family: var(--font-sans);
+		font-size: 1.2rem;
+		font-weight: 700;
+		font-stretch: 85%;
+	}
+
+	.legal__content :global(h2:first-child) {
 		margin-top: 0;
 	}
-	.legal-content :global(p) {
+
+	.legal__content :global(p),
+	.legal__content :global(ul) {
 		margin-top: 0.75rem;
 	}
-	.legal-content :global(ul) {
-		margin-top: 0.75rem;
+
+	.legal__content :global(ul) {
 		padding-left: 1.25rem;
 		list-style: disc;
 	}
-	.legal-content :global(li) {
-		margin-top: 0.375rem;
+
+	.legal__content :global(li + li) {
+		margin-top: 0.3rem;
 	}
-	.legal-content :global(a) {
-		color: var(--color-text-primary);
+
+	.legal__content :global(a) {
 		text-decoration: underline;
-		text-underline-offset: 2px;
-		text-decoration-color: var(--color-surface-border);
+		text-underline-offset: 0.2em;
+		text-decoration-color: var(--color-rule-strong);
 	}
-	.legal-content :global(a:hover) {
-		color: var(--color-lehmora);
-	}
-	.legal-content :global(strong) {
-		color: var(--color-text-primary);
-		font-weight: 500;
+
+	.legal__content :global(strong) {
+		font-weight: 650;
 	}
 </style>

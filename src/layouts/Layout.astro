@@ -1,37 +1,77 @@
 ---
 import "../styles/global.css";
+import type { Lang } from "../i18n";
 
 interface Props {
-	title?: string;
-	description?: string;
+	lang: Lang;
+	title: string;
+	description: string;
+	ogImage?: string;
+	ogImageAlt?: string;
+	ogLocale?: string;
+	/** Alternate-language URLs of this same page, for hreflang. */
+	alternates?: Partial<Record<Lang, string>>;
 }
 
 const {
-	title = "Lehmora Labs",
-	description = "Venture Studio d'ingénierie logicielle pour les marchés émergents.",
+	lang,
+	title,
+	description,
+	ogImage = "/og-fr.png",
+	ogImageAlt = "Lehmora Labs",
+	ogLocale = "fr_FR",
+	alternates = {},
 } = Astro.props;
+
+const ogLocales: Record<Lang, string> = { fr: "fr_FR", en: "en_US" };
+const alternateLocales = (Object.keys(alternates) as Lang[])
+	.filter((code) => code !== lang)
+	.map((code) => ogLocales[code]);
+
+const site = Astro.site ?? new URL("https://lehmora.com");
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#eef2ea" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
+
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		{
+			Object.entries(alternates).map(([code, path]) => (
+				<link rel="alternate" hreflang={code} href={new URL(path, site).href} />
+			))
+		}
+		{alternates.fr && <link rel="alternate" hreflang="x-default" href={new URL(alternates.fr, site).href} />}
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Lehmora Labs" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={ogImageAlt} />
+		<meta property="og:locale" content={ogLocale} />
+		{alternateLocales.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+		<meta name="twitter:image:alt" content={ogImageAlt} />
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-	}
-</style>

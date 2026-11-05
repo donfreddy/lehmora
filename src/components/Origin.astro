@@ -1,0 +1,101 @@
+---
+import Section from "./Section.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).origin;
+---
+
+<Section id="origin" label={t.label} title={t.title}>
+	<div class="story">
+		{t.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+	</div>
+
+	<footer class="signature">
+		<p class="signature__name">{t.name}</p>
+		<p class="signature__role">{t.role}</p>
+
+		<dl class="proofs">
+			{
+				t.proofs.map((proof) => (
+					<div class="proof">
+						<dt>
+							{proof.href ? (
+								<a class="link" href={proof.href} target="_blank" rel="noreferrer">
+									{proof.label}
+								</a>
+							) : (
+								proof.label
+							)}
+						</dt>
+						<dd>{proof.text}</dd>
+					</div>
+				))
+			}
+		</dl>
+	</footer>
+</Section>
+
+<style>
+	.story {
+		max-width: 38rem;
+		margin-top: 2.5rem;
+		font-family: var(--font-serif);
+		font-size: clamp(1.12rem, 1.02rem + 0.35vw, 1.27rem);
+		line-height: 1.68;
+	}
+
+	.story p + p {
+		margin-top: 1.2em;
+	}
+
+	.story p:first-child::first-line {
+		font-weight: 600;
+	}
+
+	.signature {
+		margin-top: 3rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--color-ink);
+		max-width: 46rem;
+	}
+
+	.signature__name {
+		font-weight: 700;
+		font-stretch: 85%;
+		font-size: 1.3rem;
+	}
+
+	.signature__role {
+		margin-top: 0.15rem;
+		color: var(--color-ink-2);
+	}
+
+	.proofs {
+		display: grid;
+		gap: 1.25rem 2rem;
+		margin-top: 1.75rem;
+	}
+
+	.proof dt {
+		font-weight: 700;
+		font-stretch: 88%;
+		font-size: 1rem;
+	}
+
+	.proof dd {
+		margin-top: 0.2rem;
+		font-size: 0.95rem;
+		color: var(--color-ink-2);
+	}
+
+	@media (min-width: 40rem) {
+		.proofs {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>

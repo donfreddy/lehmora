@@ -1,0 +1,106 @@
+---
+import Section from "./Section.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).status;
+const investHref = `mailto:contact@lehmora.com?subject=${encodeURIComponent(t.investSubject)}`;
+---
+
+<Section id="status" label={t.label} title={t.title}>
+	<p class="updated">{t.updated}</p>
+	<p class="lead">{t.lead}</p>
+
+	<div class="next">
+		<h3>{t.nextTitle}</h3>
+		<ol>{t.next.map((step) => <li>{step}</li>)}</ol>
+	</div>
+
+	<div class="contact">
+		<h3>{t.contactTitle}</h3>
+		<p>{t.contactText}</p>
+		<div class="contact__actions">
+			<a class="btn btn--solid" href="mailto:contact@lehmora.com">{t.ctaMail}</a>
+			<a class="btn btn--ghost" href={investHref}>{t.ctaInvest}</a>
+		</div>
+	</div>
+</Section>
+
+<style>
+	.updated {
+		margin-top: 1rem;
+		font-size: 0.9rem;
+		color: var(--color-ink-2);
+	}
+
+	.lead {
+		max-width: 38rem;
+		margin-top: 1.5rem;
+		font-family: var(--font-serif);
+		font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+		line-height: 1.5;
+	}
+
+	.next {
+		max-width: 40rem;
+		margin-top: 2.75rem;
+	}
+
+	.next h3,
+	.contact h3 {
+		font-weight: 700;
+		font-stretch: 85%;
+		font-size: 1.05rem;
+	}
+
+	.next ol {
+		margin-top: 0.75rem;
+		counter-reset: step;
+		border-top: 1.5px solid var(--color-ink);
+	}
+
+	/* A real sequence, so it is numbered. */
+	.next li {
+		counter-increment: step;
+		display: grid;
+		grid-template-columns: 2rem minmax(0, 1fr);
+		padding-block: 0.7rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.next li::before {
+		content: counter(step);
+		font-weight: 700;
+		color: var(--color-green);
+	}
+
+	.contact {
+		max-width: 40rem;
+		margin-top: 3.5rem;
+		padding: 1.5rem;
+		background: var(--color-sheet);
+		border: 1.5px solid var(--color-ink);
+	}
+
+	.contact p {
+		margin-top: 0.4rem;
+		color: var(--color-ink-2);
+	}
+
+	.contact__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+
+	@media (max-width: 30rem) {
+		.contact__actions .btn {
+			flex: 1 1 100%;
+		}
+	}
+</style>

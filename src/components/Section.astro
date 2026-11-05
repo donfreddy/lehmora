@@ -1,0 +1,75 @@
+---
+/**
+ * Ledger-page frame: the section name sits in the margin column (like an
+ * account name), the content runs to the right of a double ruling.
+ */
+interface Props {
+	id: string;
+	label: string;
+	title: string;
+	class?: string;
+}
+
+const { id, label, title, class: className } = Astro.props;
+const headingId = `${id}-title`;
+---
+
+<section id={id} class:list={["section", className]} aria-labelledby={headingId}>
+	<div class="frame section__grid">
+		<p class="section__label" aria-hidden="true">{label}</p>
+		<div class="section__body">
+			<h2 id={headingId} class="section__title">{title}</h2>
+			<slot />
+		</div>
+	</div>
+</section>
+
+<style>
+	.section {
+		border-top: 1px solid var(--color-rule);
+	}
+
+	.section__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.section__label {
+		padding-top: 3.5rem;
+		font-weight: 600;
+		font-stretch: 85%;
+		font-size: 0.95rem;
+		color: var(--color-green);
+	}
+
+	.section__body {
+		padding-block: 0.75rem 5rem;
+		min-width: 0;
+	}
+
+	.section__title {
+		max-width: 22ch;
+		font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+		font-weight: 760;
+		font-stretch: 78%;
+		line-height: 1.02;
+		letter-spacing: -0.012em;
+		text-wrap: balance;
+	}
+
+	@media (min-width: 60rem) {
+		.section__grid {
+			grid-template-columns: var(--margin-col) minmax(0, 1fr);
+		}
+
+		.section__label {
+			padding-top: 6.6rem;
+			padding-right: 1.5rem;
+		}
+
+		.section__body {
+			padding: 6rem 0 7rem 3rem;
+			border-left: 3px double var(--color-rule-strong);
+		}
+	}
+</style>

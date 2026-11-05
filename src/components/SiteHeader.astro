@@ -1,0 +1,218 @@
+---
+import Logo from "./Logo.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).nav;
+const home = lang === "fr" ? "/" : "/en/";
+
+const links = [
+	{ href: `${home}#origin`, label: t.origin },
+	{ href: `${home}#custody`, label: t.custody },
+	{ href: `${home}#engine`, label: t.engine },
+	{ href: `${home}#infra`, label: t.infra },
+	{ href: `${home}#products`, label: t.products },
+	{ href: `${home}#status`, label: t.status },
+];
+---
+
+<header class="header">
+	<div class="frame header__bar">
+		<a href={home} class="header__brand" aria-label={t.home}>
+			<Logo size={22} />
+			<span>Lehmora Labs</span>
+		</a>
+
+		<nav class="header__nav" aria-label={t.main}>
+			<ul>
+				{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+			</ul>
+		</nav>
+
+		<div class="header__actions">
+			<a class="header__lang" href={t.switchHref} hreflang={t.switchLang} lang={t.switchLang}>
+				{t.switchLabel}
+			</a>
+			<a class="header__contact" href="mailto:contact@lehmora.com">{t.contact}</a>
+
+			<details class="menu">
+				<summary>{t.menu}</summary>
+				<div class="menu__panel">
+					<ul>
+						{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+						<li class="menu__lang">
+							<a href={t.switchHref} hreflang={t.switchLang} lang={t.switchLang}>{t.switchLabel}</a>
+						</li>
+					</ul>
+					<a class="btn btn--solid menu__cta" href="mailto:contact@lehmora.com">{t.contact}</a>
+				</div>
+			</details>
+		</div>
+	</div>
+</header>
+
+<script>
+	// Close the mobile menu once a destination is picked.
+	document.querySelectorAll<HTMLAnchorElement>(".menu__panel a").forEach((link) => {
+		link.addEventListener("click", () => link.closest("details")?.removeAttribute("open"));
+	});
+</script>
+
+<style>
+	.header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: color-mix(in srgb, var(--color-paper) 92%, transparent);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.header__bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		height: 4rem;
+	}
+
+	.header__brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-weight: 700;
+		font-stretch: 88%;
+		font-size: 1.05rem;
+		letter-spacing: -0.01em;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.header__nav {
+		display: none;
+	}
+
+	.header__nav ul {
+		display: flex;
+		gap: 0.25rem;
+	}
+
+	.header__nav a,
+	.header__lang {
+		display: inline-block;
+		padding: 0.4rem 0.6rem;
+		font-size: 0.94rem;
+		color: var(--color-ink-2);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.header__nav a:hover,
+	.header__lang:hover {
+		color: var(--color-ink);
+	}
+
+	.header__actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.header__contact {
+		display: none;
+		padding: 0.45rem 0.9rem;
+		border: 1.5px solid var(--color-ink);
+		font-weight: 600;
+		font-size: 0.92rem;
+		text-decoration: none;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.header__contact:hover {
+		background: var(--color-ink);
+		color: var(--color-paper);
+	}
+
+	.menu {
+		position: relative;
+	}
+
+	.menu summary {
+		list-style: none;
+		cursor: pointer;
+		padding: 0.45rem 0.9rem;
+		border: 1.5px solid var(--color-ink);
+		font-weight: 600;
+		font-size: 0.92rem;
+	}
+
+	.menu summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.menu[open] summary {
+		background: var(--color-ink);
+		color: var(--color-paper);
+	}
+
+	.menu__panel {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.6rem);
+		width: min(18rem, calc(100vw - 2rem));
+		padding: 0.5rem;
+		background: var(--color-paper);
+		border: 1.5px solid var(--color-ink);
+		box-shadow: 6px 6px 0 var(--color-sheet);
+	}
+
+	.menu__panel li a {
+		display: block;
+		padding: 0.7rem 0.75rem;
+		border-bottom: 1px solid var(--color-rule);
+		font-size: 1rem;
+		text-decoration: none;
+	}
+
+	.menu__cta {
+		width: 100%;
+		margin-top: 0.75rem;
+	}
+
+	/* Narrow phones: the language link moves into the menu so the bar never overflows. */
+	.menu__lang {
+		display: none;
+	}
+
+	@media (max-width: 24rem) {
+		.header__lang {
+			display: none;
+		}
+
+		.menu__lang {
+			display: list-item;
+			list-style: none;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.header__nav {
+			display: block;
+		}
+
+		.header__contact {
+			display: inline-block;
+		}
+
+		.menu {
+			display: none;
+		}
+	}
+</style>

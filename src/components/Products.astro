@@ -1,0 +1,334 @@
+---
+import Section from "./Section.astro";
+import { products, sharedAssets } from "../data/products";
+import { fill, getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).products;
+const marks = { yes: "●", planned: "○", no: "" } as const;
+---
+
+<Section id="products" label={t.label} title={t.title}>
+	<p class="intro">{t.intro}</p>
+
+	<!-- Explicit roles: Safari drops table semantics once rows are restyled with display: grid on phones. -->
+	<table class="accounts" role="table">
+		<thead role="rowgroup">
+			<tr role="row">
+				<th scope="col" role="columnheader">{t.cols.product}</th>
+				<th scope="col" role="columnheader">{t.cols.purpose}</th>
+				<th scope="col" role="columnheader">{t.cols.funds}</th>
+				<th scope="col" role="columnheader">{t.cols.status}</th>
+				<th scope="col" role="columnheader">{t.cols.stack}</th>
+			</tr>
+		</thead>
+		<tbody role="rowgroup">
+			{
+				products.map((product) => (
+					<tr role="row">
+						<th scope="row" role="rowheader" class="accounts__name">
+							<a
+								class="link"
+								href={product.url}
+								target="_blank"
+								rel="noreferrer"
+								aria-label={fill(t.visit, { name: product.name })}
+							>
+								{product.name}
+							</a>
+						</th>
+						<td role="cell" data-label={t.cols.purpose}>{t.items[product.slug].purpose}</td>
+						<td role="cell" data-label={t.cols.funds} class:list={["accounts__funds", { "is-held": product.holdsFunds }]}>
+							{t.items[product.slug].funds}
+						</td>
+						<td role="cell" data-label={t.cols.status}>
+							<span class:list={["status", `status--${product.status}`]}>{t.statusLabels[product.status]}</span>
+						</td>
+						<td role="cell" data-label={t.cols.stack} class="accounts__stack">{product.stack.join(", ")}</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+
+	<div class="shared">
+		<h3>{t.shared.title}</h3>
+		<p class="shared__intro">{t.shared.intro}</p>
+
+		<div class="shared__scroll" role="region" tabindex="0" aria-label={t.shared.scrollLabel}>
+			<table class="matrix">
+				<thead>
+					<tr>
+						<th scope="col"><span class="sr-only">{t.shared.corner}</span></th>
+						{products.map((product) => <th scope="col">{product.name}</th>)}
+					</tr>
+				</thead>
+				<tbody>
+					{
+						sharedAssets.map((asset) => (
+							<tr>
+								<th scope="row">
+									<code>{asset.name}</code>
+									<span>{t.shared.assets[asset.key]}</span>
+								</th>
+								{products.map((product) => {
+									const usage = asset.usage[product.slug];
+									return (
+										<td class:list={["matrix__cell", `is-${usage}`]}>
+											<span aria-hidden="true">{marks[usage]}</span>
+											<span class="sr-only">{t.shared.legend[usage]}</span>
+										</td>
+									);
+								})}
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+
+		<p class="legend">
+			<span><span aria-hidden="true">●</span> {t.shared.legend.yes}</span>
+			<span><span aria-hidden="true">○</span> {t.shared.legend.planned}</span>
+			<span>{t.shared.emptyLegend}</span>
+		</p>
+	</div>
+</Section>
+
+<style>
+	.intro {
+		max-width: 40rem;
+		margin-top: 1.75rem;
+		font-family: var(--font-serif);
+		font-size: 1.12rem;
+		line-height: 1.65;
+		color: var(--color-ink-2);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.accounts {
+		width: 100%;
+		margin-top: 3rem;
+		border-collapse: collapse;
+		border-top: 1.5px solid var(--color-ink);
+	}
+
+	.accounts thead {
+		display: none;
+	}
+
+	.accounts tr {
+		display: grid;
+		gap: 0.5rem;
+		padding-block: 1.4rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.accounts td {
+		display: grid;
+		grid-template-columns: 8.5rem minmax(0, 1fr);
+		gap: 0.75rem;
+		font-size: 0.97rem;
+	}
+
+	.accounts td::before {
+		content: attr(data-label);
+		font-size: 0.82rem;
+		font-weight: 600;
+		color: var(--color-ink-2);
+	}
+
+	.accounts__name {
+		text-align: left;
+		font-weight: 760;
+		font-stretch: 80%;
+		font-size: 1.6rem;
+		line-height: 1.1;
+	}
+
+	.accounts__funds {
+		color: var(--color-green);
+		font-weight: 600;
+	}
+
+	.accounts__funds.is-held {
+		color: var(--color-debit);
+	}
+
+	.accounts__stack {
+		color: var(--color-ink-2);
+	}
+
+	.status {
+		display: inline-block;
+		font-weight: 600;
+	}
+
+	.status--staging::before,
+	.status--dev::before {
+		content: "";
+		display: inline-block;
+		width: 0.55rem;
+		height: 0.55rem;
+		margin-right: 0.45rem;
+		border: 1.5px solid var(--color-ink);
+		border-radius: 50%;
+		vertical-align: 0.05em;
+	}
+
+	/* Half-filled: running, but not in production. */
+	.status--staging::before {
+		background: linear-gradient(90deg, var(--color-ink) 50%, transparent 50%);
+	}
+
+	.shared {
+		margin-top: 4rem;
+	}
+
+	.shared h3 {
+		font-weight: 760;
+		font-stretch: 80%;
+		font-size: 1.5rem;
+	}
+
+	.shared__intro {
+		max-width: 36rem;
+		margin-top: 0.5rem;
+		color: var(--color-ink-2);
+	}
+
+	/* position: relative keeps the absolutely positioned .sr-only labels inside the scroller;
+	   without it they escape the overflow clip and widen the whole page on phones. */
+	.shared__scroll {
+		position: relative;
+		margin-top: 1.5rem;
+		overflow-x: auto;
+	}
+
+	.matrix {
+		width: 100%;
+		min-width: 30rem;
+		border-collapse: collapse;
+	}
+
+	.matrix thead th {
+		padding: 0 0.5rem 0.6rem;
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-align: center;
+		border-bottom: 1.5px solid var(--color-ink);
+	}
+
+	.shared__scroll:focus-visible {
+		outline-offset: 4px;
+	}
+
+	.matrix tbody th {
+		padding: 0.8rem 1rem 0.8rem 0;
+		text-align: left;
+		font-weight: 400;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.matrix tbody th code {
+		display: block;
+		font-weight: 500;
+		font-size: 0.92rem;
+	}
+
+	.matrix tbody th span {
+		font-size: 0.88rem;
+		color: var(--color-ink-2);
+	}
+
+	.matrix tbody th {
+		min-width: 11rem;
+	}
+
+	.matrix__cell {
+		width: 4.75rem;
+		text-align: center;
+		font-size: 1.1rem;
+		border-bottom: 1px solid var(--color-rule);
+		border-left: 1px solid var(--color-rule);
+	}
+
+	@media (min-width: 46rem) {
+		.matrix__cell {
+			width: 6.5rem;
+		}
+	}
+
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.5rem;
+		margin-top: 0.85rem;
+		font-size: 0.88rem;
+		color: var(--color-ink-2);
+	}
+
+	/* Table mode only once the content column can hold five columns without overflowing. */
+	@media (min-width: 68rem) {
+		.accounts thead {
+			display: table-header-group;
+		}
+
+		.accounts tr {
+			display: table-row;
+		}
+
+		.accounts th,
+		.accounts td {
+			display: table-cell;
+			padding: 1.25rem 1rem;
+			vertical-align: top;
+			border-bottom: 1px solid var(--color-rule);
+		}
+
+		.accounts td::before {
+			content: none;
+		}
+
+		.accounts thead th {
+			padding-block: 0.7rem;
+			text-align: left;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: var(--color-ink-2);
+			border-bottom: 1px solid var(--color-rule-strong);
+		}
+
+		.accounts th:first-child {
+			padding-left: 0;
+		}
+
+		.accounts__name {
+			font-size: 1.45rem;
+		}
+
+		.accounts td {
+			border-left: 1px solid var(--color-rule);
+		}
+
+		.accounts__funds {
+			width: 26%;
+		}
+
+		.status {
+			white-space: nowrap;
+		}
+	}
+</style>

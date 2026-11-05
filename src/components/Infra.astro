@@ -1,0 +1,193 @@
+---
+import Section from "./Section.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).infra;
+const [prod, staging] = t.nodes;
+---
+
+<Section id="infra" label={t.label} title={t.title}>
+	<p class="lead">{t.lead}</p>
+
+	<div class="topology">
+		<article class="server">
+			<h3><code>{prod.name}</code></h3>
+			<ul>{prod.items.map((item) => <li>{item}</li>)}</ul>
+		</article>
+
+		<p class="gap" role="note">
+			<span>{t.separation}</span>
+		</p>
+
+		<article class="server server--staging">
+			<h3><code>{staging.name}</code></h3>
+			<ul>{staging.items.map((item) => <li>{item}</li>)}</ul>
+		</article>
+	</div>
+
+	<div class="notes">
+		<div class="note">
+			<h3>{t.tradeoffTitle}</h3>
+			<p>{t.tradeoff}</p>
+		</div>
+		<div class="note note--state">
+			<h3>{t.stateTitle}</h3>
+			<p>{t.state}</p>
+		</div>
+	</div>
+
+	<div class="adrs">
+		<h3>{t.adrTitle}</h3>
+		<ol>
+			{
+				t.adrs.map((adr) => (
+					<li>
+						<code>{adr.id}</code>
+						<span>{adr.text}</span>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</Section>
+
+<style>
+	.lead {
+		max-width: 40rem;
+		margin-top: 1.75rem;
+		font-family: var(--font-serif);
+		font-size: 1.12rem;
+		line-height: 1.65;
+	}
+
+	.topology {
+		display: grid;
+		gap: 0;
+		margin-top: 3rem;
+	}
+
+	.server {
+		background: var(--color-ink);
+		color: var(--color-paper);
+		padding: 1.1rem 1.25rem 1.25rem;
+	}
+
+	.server h3 code {
+		font-size: 1rem;
+		font-weight: 500;
+	}
+
+	.server ul {
+		margin-top: 0.85rem;
+	}
+
+	.server li {
+		padding-block: 0.42rem;
+		border-top: 1px solid color-mix(in srgb, var(--color-paper) 16%, transparent);
+		font-size: 0.95rem;
+	}
+
+	.server--staging {
+		background: var(--color-sheet);
+		color: var(--color-ink);
+		border: 1.5px solid var(--color-ink);
+	}
+
+	.server--staging li {
+		border-top-color: var(--color-rule);
+	}
+
+	/* The cut between the two servers is drawn, not decorated: nothing crosses it. */
+	.gap {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 0;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-ink-2);
+		text-align: center;
+		background-image: repeating-linear-gradient(
+			to bottom,
+			var(--color-ink-2) 0 6px,
+			transparent 6px 12px
+		);
+		background-size: 1.5px 100%;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.gap span {
+		padding: 0.25rem 0.6rem;
+		background: var(--color-paper);
+		max-width: 16rem;
+	}
+
+	.notes {
+		display: grid;
+		gap: 1.5rem;
+		margin-top: 2.5rem;
+	}
+
+	.note {
+		padding-left: 1rem;
+		border-left: 3px solid var(--color-ink);
+	}
+
+	.note--state {
+		border-left-style: dashed;
+	}
+
+	.note h3,
+	.adrs h3 {
+		font-weight: 700;
+		font-stretch: 85%;
+		font-size: 1.05rem;
+	}
+
+	.note p {
+		margin-top: 0.35rem;
+		max-width: 30rem;
+		color: var(--color-ink-2);
+	}
+
+	.adrs {
+		margin-top: 3rem;
+	}
+
+	.adrs ol {
+		margin-top: 0.85rem;
+		border-top: 1.5px solid var(--color-ink);
+	}
+
+	.adrs li {
+		display: grid;
+		grid-template-columns: 3.5rem minmax(0, 1fr);
+		gap: 1rem;
+		align-items: baseline;
+		padding-block: 0.55rem;
+		border-bottom: 1px solid var(--color-rule);
+		font-size: 0.97rem;
+	}
+
+	.adrs li code {
+		color: var(--color-green);
+	}
+
+	@media (min-width: 46rem) {
+		.topology {
+			grid-template-columns: minmax(0, 1fr) 9rem minmax(0, 1fr);
+			align-items: stretch;
+		}
+
+		.notes {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 2.5rem;
+		}
+	}
+</style>

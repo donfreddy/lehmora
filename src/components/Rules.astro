@@ -1,0 +1,144 @@
+---
+import Section from "./Section.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).rules;
+---
+
+<Section id="engine" label={t.label} title={t.title}>
+	<p class="intro">{t.intro}</p>
+
+	<div class="rules">
+		<div class="rules__head" aria-hidden="true">
+			<span>{t.colDispute}</span>
+			<span>{t.colRule}</span>
+		</div>
+		<ul>
+			{
+				t.items.map((item) => (
+					<li class="rule">
+						<p class="rule__dispute">
+							<span class="sr-label">{t.colDispute}. </span>
+							<q>{item.dispute}</q>
+						</p>
+						<div class="rule__body">
+							<p>
+								<span class="sr-label">{t.colRule}. </span>
+								{item.rule}
+							</p>
+							<code>{item.code}</code>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+
+	<p class="source">{t.source}</p>
+</Section>
+
+<style>
+	.intro {
+		max-width: 40rem;
+		margin-top: 1.75rem;
+		font-family: var(--font-serif);
+		font-size: 1.12rem;
+		line-height: 1.65;
+		color: var(--color-ink-2);
+	}
+
+	.rules {
+		margin-top: 3rem;
+		border-top: 1.5px solid var(--color-ink);
+	}
+
+	.rules__head {
+		display: none;
+	}
+
+	.sr-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.rule {
+		display: grid;
+		gap: 0.75rem;
+		padding-block: 1.4rem;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.rule__dispute {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 1.2rem;
+		line-height: 1.4;
+		font-variation-settings: "opsz" 24;
+	}
+
+	q {
+		quotes: "«\00a0" "\00a0»" "“" "”";
+	}
+
+	:global(html[lang="en"]) q {
+		quotes: "“" "”" "‘" "’";
+	}
+
+	.rule__body p {
+		max-width: 34rem;
+		line-height: 1.55;
+	}
+
+	.rule__body code {
+		display: inline-block;
+		margin-top: 0.6rem;
+		padding: 0.1rem 0.45rem;
+		background: var(--color-sheet);
+		border: 1px solid var(--color-rule);
+		color: var(--color-green);
+	}
+
+	.source {
+		margin-top: 1.5rem;
+		font-size: 0.9rem;
+		color: var(--color-ink-2);
+	}
+
+	@media (min-width: 52rem) {
+		.rules__head,
+		.rule {
+			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+			column-gap: 2.5rem;
+		}
+
+		.rules__head {
+			display: grid;
+			padding-block: 0.6rem;
+			border-bottom: 1px solid var(--color-rule-strong);
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: var(--color-ink-2);
+		}
+
+		.rule {
+			padding-block: 1.6rem;
+		}
+
+		/* Vertical ruling between the two columns, like a two-column journal. */
+		.rule__body,
+		.rules__head span:last-child {
+			padding-left: 1.25rem;
+			margin-left: -1.25rem;
+			border-left: 1px solid var(--color-rule);
+		}
+	}
+</style>
