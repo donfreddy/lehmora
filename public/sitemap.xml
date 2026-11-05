@@ -12,6 +12,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://lehmora.com/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lehmora.com/"/>
   </url>
+  <url>
+    <loc>https://lehmora.com/engineering/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lehmora.com/engineering/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lehmora.com/en/engineering/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lehmora.com/engineering/"/>
+  </url>
+  <url>
+    <loc>https://lehmora.com/en/engineering/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lehmora.com/engineering/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lehmora.com/en/engineering/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lehmora.com/engineering/"/>
+  </url>
   <url><loc>https://lehmora.com/legal/</loc></url>
   <url><loc>https://lehmora.com/privacy/</loc></url>
   <url><loc>https://lehmora.com/terms/</loc></url>
