@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lehmora.com/sitemap.xml
+Sitemap: https://lehmora.com/sitemap-index.xml
