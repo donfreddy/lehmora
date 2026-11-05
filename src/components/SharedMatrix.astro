@@ -1,0 +1,141 @@
+---
+import { listedProducts, sharedAssets } from "../data/products";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDict(lang).engineering.entry.shared;
+const marks = { yes: "●", planned: "○", no: "" } as const;
+---
+
+<div class="shared">
+	<h3>{t.title}</h3>
+	<p class="shared__intro">{t.intro}</p>
+
+	<div class="shared__scroll" role="region" tabindex="0" aria-label={t.scrollLabel}>
+		<table class="matrix">
+			<thead>
+				<tr>
+					<th scope="col"><span class="sr-only">{t.corner}</span></th>
+					{listedProducts.map((product) => <th scope="col">{product.name}</th>)}
+				</tr>
+			</thead>
+			<tbody>
+				{
+					sharedAssets.map((asset) => (
+						<tr>
+							<th scope="row">
+								<code>{asset.name}</code>
+								<span>{t.assets[asset.key]}</span>
+							</th>
+							{listedProducts.map((product) => {
+								const usage = asset.usage[product.slug];
+								return (
+									<td class:list={["matrix__cell", `is-${usage}`]}>
+										<span aria-hidden="true">{marks[usage]}</span>
+										<span class="sr-only">{t.legend[usage]}</span>
+									</td>
+								);
+							})}
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+	</div>
+
+	<p class="legend">
+		<span><span aria-hidden="true">●</span> {t.legend.yes}</span>
+		<span><span aria-hidden="true">○</span> {t.legend.planned}</span>
+		<span>{t.emptyLegend}</span>
+	</p>
+</div>
+
+<style>
+	.shared {
+		margin-top: 4rem;
+	}
+
+	.shared h3 {
+		font-weight: 760;
+		font-stretch: 80%;
+		font-size: 1.5rem;
+	}
+
+	.shared__intro {
+		max-width: 36rem;
+		margin-top: 0.5rem;
+		color: var(--color-ink-2);
+	}
+
+	/* position: relative keeps the absolutely positioned .sr-only labels inside the scroller;
+	   without it they escape the overflow clip and widen the whole page on phones. */
+	.shared__scroll {
+		position: relative;
+		margin-top: 1.5rem;
+		overflow-x: auto;
+	}
+
+	.shared__scroll:focus-visible {
+		outline-offset: 4px;
+	}
+
+	.matrix {
+		width: 100%;
+		min-width: 26rem;
+		border-collapse: collapse;
+	}
+
+	.matrix thead th {
+		padding: 0 0.5rem 0.6rem;
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-align: center;
+		border-bottom: 1.5px solid var(--color-ink);
+	}
+
+	.matrix tbody th {
+		min-width: 11rem;
+		padding: 0.8rem 1rem 0.8rem 0;
+		text-align: left;
+		font-weight: 400;
+		border-bottom: 1px solid var(--color-rule);
+	}
+
+	.matrix tbody th code {
+		display: block;
+		font-weight: 500;
+		font-size: 0.92rem;
+	}
+
+	.matrix tbody th span {
+		font-size: 0.88rem;
+		color: var(--color-ink-2);
+	}
+
+	.matrix__cell {
+		width: 4.75rem;
+		text-align: center;
+		font-size: 1.1rem;
+		border-bottom: 1px solid var(--color-rule);
+		border-left: 1px solid var(--color-rule);
+	}
+
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.5rem;
+		margin-top: 0.85rem;
+		font-size: 0.88rem;
+		color: var(--color-ink-2);
+	}
+
+	@media (min-width: 46rem) {
+		.matrix__cell {
+			width: 6.5rem;
+		}
+	}
+</style>

@@ -5,7 +5,7 @@ export type Lang = "fr" | "en";
 export type { Dict };
 
 /** Keys whose values are code or URLs and must stay byte-for-byte. */
-const VERBATIM_KEYS = new Set(["code", "href", "switchHref", "ogImage"]);
+const VERBATIM_KEYS = new Set(["code", "href", "switchHref", "homeHref", "journalHref", "ogImage"]);
 
 /**
  * Typographic pass over a dictionary:

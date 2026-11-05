@@ -4,9 +4,9 @@ export const en: Dict = {
   meta: {
     title: "Lehmora Labs, a software engineering studio in Douala",
     description:
-      "Lehmora Labs, a software engineering studio in Douala, builds software that keeps the books for tontines and schools without holding their money. Four products: Famsub, Tallyno, Payskool and Marge.",
-    ogImageAlt: "Lehmora Labs: we keep the books for tontines and schools, never their money. Tontine funds held by Tallyno: 0 XAF.",
+      "Lehmora Labs, a software engineering studio in Douala, builds software that keeps the books for tontines and schools without holding their money. Flagship product: Tallyno.",
     ogImage: "/og-en.png",
+    ogImageAlt: "Lehmora Labs: we keep the books for tontines and schools, never their money. Tontine funds held by Tallyno: 0 XAF.",
     ogLocale: "en_US",
     skip: "Skip to content",
   },
@@ -14,14 +14,17 @@ export const en: Dict = {
     origin: "Origin",
     custody: "Principle",
     engine: "The engine",
-    infra: "Infra",
     products: "Products",
     status: "Status",
+    journal: "Engineering",
+    journalHref: "/en/engineering/",
     contact: "Write to us",
     menu: "Menu",
+    newTab: "(opens in a new tab)",
     main: "Main navigation",
     footer: "Footer links",
     home: "Lehmora Labs, home",
+    homeHref: "/en/",
     switchLabel: "Français",
     switchHref: "/",
     switchLang: "fr",
@@ -29,7 +32,7 @@ export const en: Dict = {
   hero: {
     title: "We keep the books for tontines and schools. Never their money.",
     lead: "Lehmora Labs is a software engineering studio based in Douala, Cameroon. For tontines and schools, our products record who owes what, since when, and who confirmed the payment. The money itself goes from payer to beneficiary, never through us.",
-    ctaPrimary: "See the products",
+    ctaPrimary: "Discover Tallyno",
     ctaSecondary: "Write to the studio",
     ledger: {
       label: "Sample tontine round",
@@ -72,10 +75,11 @@ export const en: Dict = {
       {
         label: "lehmora-infra",
         text: "9 architecture decisions written before provisioning a single server.",
+        href: "/en/engineering/",
       },
       {
         label: "nui_flutter",
-        text: "The Flutter design system shared by Famsub, Tallyno and Marge.",
+        text: "The Flutter design system shared by the studio's mobile apps.",
       },
       {
         label: "Stack",
@@ -90,9 +94,20 @@ export const en: Dict = {
   custody: {
     label: "Principle",
     title: "Why we don't keep the money.",
-    paragraphs: [
-      "Famsub, our most advanced product, follows the classic escrow model: the subscriber pays, Famsub retains the amount for 30 days, then releases it to the owner. Within 7 days of joining, the subscriber can be refunded. Making that fair took a retention period, a settlement queue, a double-entry ledger and refund logic. Holding other people's money means answering for it in every dispute.",
-      "For Tallyno and Payskool, we took the other road. Members pay the beneficiary over Mobile Money; families pay the school into its own merchant account. Our software keeps the register: who owes what, since when, and who confirmed the payment.",
+    lead: "In Douala, the objection was never the technology: nobody wanted to hand the group's money to an app. Tallyno starts from there, and Payskool applies the same principle to schools. Members pay the beneficiary over Mobile Money; families pay the school into its own merchant account. We keep the register: who owes what, since when, and who confirmed the payment.",
+    reasons: [
+      {
+        title: "No trust to ask for",
+        text: "To use Tallyno or Payskool, a member or a family never hands us their money. They only need to trust the register, which they can check.",
+      },
+      {
+        title: "No funds stuck with us",
+        text: "With Tallyno and Payskool, money does not pass through our accounts. If the studio stopped, no group and no school would have funds to recover from us.",
+      },
+      {
+        title: "A lighter structure",
+        text: "For these two products, no customer treasury to reconcile and no funds in transit to watch. Their cost stays that of software.",
+      },
     ],
     escrow: {
       title: "Famsub, the escrow",
@@ -113,6 +128,7 @@ export const en: Dict = {
       registryNote: "who owes what, since when, who confirmed",
       held: "Funds held: none",
     },
+    famsub: "Famsub is the exception, by choice: when people share subscriptions, the subscriber must be protected if the service is not delivered. So Famsub retains the amount for 30 days before releasing it to the owner, with a refund possible within 7 days of joining. Building that properly took a settlement queue, a double-entry ledger and refund logic: exactly the cost the other products avoid.",
   },
   rules: {
     label: "The engine",
@@ -138,7 +154,7 @@ export const en: Dict = {
       },
       {
         dispute: "The late fee was counted twice.",
-        rule: "When a group opts into late fees, they are recomputed from scratch every night, never incremented. A job that crashes and restarts doubles nothing.",
+        rule: "Late fees, an upcoming option, are recomputed from scratch every night, never incremented. A job that crashes and restarts doubles nothing.",
         code: "penaltyAmount",
       },
       {
@@ -159,61 +175,37 @@ export const en: Dict = {
     ],
     source: "Taken from the 17 documented invariants of Tallyno's tontine module.",
   },
-  infra: {
-    label: "Infra",
-    title: "The infrastructure is written before it is switched on.",
-    lead: "One repository describes how Famsub, Tallyno and then Payskool get deployed: Docker Compose stacks, scripts, backups, monitoring. It is designed so that a lost server can be rebuilt from a blank Ubuntu image, using that repository and the off-site backups.",
-    separation: "no shared network, database or secret",
-    nodes: [
-      {
-        name: "prod-node",
-        items: [
-          "Traefik, routing and TLS",
-          "PostgreSQL, one database and role per app",
-          "Redis",
-          "Famsub and Tallyno backends",
-          "Per-database backups, off-site",
-          "Uptime Kuma monitoring",
-          "Self-hosted mail, Stalwart",
-        ],
-      },
-      {
-        name: "staging-node",
-        items: [
-          "Traefik",
-          "Dedicated PostgreSQL and Redis",
-          "Isolated copies of the backends",
-          "No mail",
-        ],
-      },
-    ],
-    tradeoffTitle: "The trade-off",
-    tradeoff: "No multi-region, no high availability. For three small backends, a rebuildable, well-backed-up server costs less and is easier to reason about than a cluster.",
-    stateTitle: "Actual state",
-    state: "Stacks, scripts and decisions are under version control. The two servers are not provisioned yet: none of this serves real traffic today.",
-    adrTitle: "Architecture decisions",
-    adrs: [
-      { id: "D-01", text: "Two servers split by environment, not by service tier." },
-      { id: "D-02", text: "One PostgreSQL engine per server, one database and role per app." },
-      { id: "D-03", text: "No Portainer, no webhooks: git pull and docker compose over SSH." },
-      { id: "D-04", text: "No network mesh between production and staging." },
-      { id: "D-05", text: "Self-hosted mail, on production only." },
-      { id: "D-06", text: "Backup destination not tied to one provider." },
-      { id: "D-07", text: "One dump per database, restorable app by app." },
-      { id: "D-08", text: "A single monitoring instance for both servers." },
-      { id: "D-09", text: "Tallyno adopts Famsub's build pipeline (merge in progress)." },
-    ],
-  },
   products: {
     label: "Products",
-    title: "Four products. Only one holds money.",
-    intro: "Three of our four products never touch their users' funds. The fourth, Famsub, holds them in escrow, and owns that choice.",
+    title: "Tallyno first.",
+    intro: "Tallyno carries the studio's thesis: the tontine, without anyone handing us their money. That is where the effort goes.",
+    flagship: {
+      tagline: "Tontines and group expenses.",
+      points: [
+        "Rounds, contributions and debts tracked group by group.",
+        "Each payment declared by the payer, then confirmed by the beneficiary or the group's treasurer.",
+        "The group's rules enforced by code, from round order to carried-over debts.",
+      ],
+      screens: {
+        round: {
+          caption: "The current round: who has paid, who still owes.",
+          alt: "Tallyno screen showing the current tontine round.",
+        },
+        debts: {
+          caption: "The group's debts: who owes what, since when.",
+          alt: "Tallyno screen showing the debts of the group's members.",
+        },
+      },
+      screensLabel: "Tallyno screenshots, horizontally scrollable",
+    },
+    othersTitle: "The studio's other products",
+    shared: "What they share with Tallyno: the nui_flutter design system, a NestJS backend foundation and, once provisioned, a common infrastructure.",
+    sharedLink: "The details are in the engineering notes.",
     cols: {
       product: "Product",
       purpose: "What it does",
       funds: "Holds money?",
       status: "Status",
-      stack: "Stack",
     },
     items: {
       famsub: {
@@ -237,34 +229,15 @@ export const en: Dict = {
       staging: "In staging",
       dev: "In development",
     },
-    visit: "Visit the {name} website",
-    shared: {
-      title: "What is actually shared",
-      intro: "No abstract “common engine”. Three concrete building blocks, used or planned by several products.",
-      assets: {
-        infra: "Deployment, databases, backups, monitoring.",
-        nui: "Shared Flutter components and theme.",
-        nest: "Same backend framework, same conventions.",
-      },
-      legend: {
-        yes: "in use",
-        planned: "planned",
-        no: "not applicable",
-      },
-      corner: "Shared building block",
-      scrollLabel: "Shared building blocks table, scrolls horizontally",
-      emptyLegend: "empty cell: not applicable",
-    },
   },
   status: {
     label: "Status",
-    title: "Where we stand, no rounding up.",
+    title: "Where we stand.",
     updated: "Updated November 2026",
-    lead: "No product is in production yet. Famsub runs in staging. Tallyno, Payskool and Marge are in development.",
+    lead: "No product is in production yet. Famsub runs in staging; Tallyno and Payskool are in development.",
     nextTitle: "Next steps",
     next: [
-      "Provision the two servers described in lehmora-infra.",
-      "Move Famsub and Tallyno deployments onto the studio's infrastructure.",
+      "Provision the studio's infrastructure and move Famsub and Tallyno deployments onto it.",
       "Validate Famsub and Tallyno in staging, with anonymised data shaped like real traffic.",
     ],
     contactTitle: "Write to us",
@@ -272,6 +245,55 @@ export const en: Dict = {
     ctaMail: "contact@lehmora.com",
     ctaInvest: "Talk investment",
     investSubject: "Investor relations",
+  },
+  engineering: {
+    title: "Engineering notes, Lehmora Labs",
+    description: "Lehmora Labs' technical decisions, with their reasons and their cost: deployment, environment isolation, backups.",
+    heading: "Engineering notes",
+    intro: "The studio's technical decisions, written down with their reasons and their cost. For developers who want to know how it is built.",
+    back: "Back to the home page",
+    entry: {
+      date: "November 2026",
+      datetime: "2026-11",
+      title: "Three backends, two servers, nine decisions.",
+      paragraphs: [
+        "Famsub, Tallyno and then Payskool each have a NestJS backend with PostgreSQL and Redis. Rather than letting each product deploy its own way, one repository, lehmora-infra, describes the whole setup: Docker Compose stacks, scripts, backups, monitoring. It is designed so that a lost server can be rebuilt from a blank Ubuntu image, using that repository and the off-site backups.",
+        "Production and staging are planned on two separate servers that will share no network, no database and no secret. A failed migration or a container eating all the memory in staging will not be able to take production down.",
+      ],
+      tradeoffTitle: "The trade-off",
+      tradeoff: "No multi-region, no high availability. For three small backends, a rebuildable, well-backed-up server costs less and is easier to reason about than a cluster.",
+      stateTitle: "Actual state",
+      state: "Stacks, scripts and decisions are under version control. The two servers are not provisioned yet: none of this serves real traffic today.",
+      adrTitle: "The decisions",
+      adrs: [
+        { id: "D-01", text: "Two servers split by environment, not by service tier." },
+        { id: "D-02", text: "One PostgreSQL engine per server, one database and role per app." },
+        { id: "D-03", text: "No Portainer, no webhooks: git pull and docker compose over SSH." },
+        { id: "D-04", text: "No network mesh between production and staging." },
+        { id: "D-05", text: "Self-hosted mail, on production only." },
+        { id: "D-06", text: "Backup destination not tied to one provider." },
+        { id: "D-07", text: "One dump per database, restorable app by app." },
+        { id: "D-08", text: "A single monitoring instance for both servers." },
+        { id: "D-09", text: "Tallyno adopts Famsub's build pipeline (merge in progress)." },
+      ],
+      shared: {
+        title: "What the products actually share",
+        intro: "No abstract “common engine”. Three concrete building blocks, used or planned by several products.",
+        assets: {
+          infra: "Deployment, databases, backups, monitoring.",
+          nui: "Shared Flutter components and theme.",
+          nest: "Same backend framework, same conventions.",
+        },
+        legend: {
+          yes: "in use",
+          planned: "planned",
+          no: "not applicable",
+        },
+        corner: "Shared building block",
+        scrollLabel: "Shared building blocks table, scrolls horizontally",
+        emptyLegend: "empty cell: not applicable",
+      },
+    },
   },
   footer: {
     tagline: "Software engineering studio, Douala. We keep the books; the money, only when an escrow requires it.",

@@ -8,6 +8,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = getDict(lang).origin;
+const newTab = getDict(lang).nav.newTab;
 ---
 
 <Section id="origin" label={t.label} title={t.title}>
@@ -24,9 +25,14 @@ const t = getDict(lang).origin;
 				t.proofs.map((proof) => (
 					<div class="proof">
 						<dt>
-							{proof.href ? (
+							{proof.href?.startsWith("/") ? (
+								<a class="link" href={proof.href}>
+									{proof.label}
+								</a>
+							) : proof.href ? (
 								<a class="link" href={proof.href} target="_blank" rel="noreferrer">
 									{proof.label}
+									<span class="sr-only">{newTab}</span>
 								</a>
 							) : (
 								proof.label

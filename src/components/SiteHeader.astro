@@ -4,20 +4,24 @@ import { getDict, type Lang } from "../i18n";
 
 interface Props {
 	lang: Lang;
+	/** Same page in the other language; defaults to the other home page. */
+	switchHref?: string;
 }
 
 const { lang } = Astro.props;
 const t = getDict(lang).nav;
-const home = lang === "fr" ? "/" : "/en/";
+const switchHref = Astro.props.switchHref ?? t.switchHref;
+const home = t.homeHref;
 
 const links = [
 	{ href: `${home}#origin`, label: t.origin },
 	{ href: `${home}#custody`, label: t.custody },
 	{ href: `${home}#engine`, label: t.engine },
-	{ href: `${home}#infra`, label: t.infra },
 	{ href: `${home}#products`, label: t.products },
 	{ href: `${home}#status`, label: t.status },
+	{ href: t.journalHref, label: t.journal },
 ];
+const current = (href: string) => (Astro.url.pathname === href ? "page" : undefined);
 ---
 
 <header class="header">
@@ -29,12 +33,12 @@ const links = [
 
 		<nav class="header__nav" aria-label={t.main}>
 			<ul>
-				{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+				{links.map((link) => <li><a href={link.href} aria-current={current(link.href)}>{link.label}</a></li>)}
 			</ul>
 		</nav>
 
 		<div class="header__actions">
-			<a class="header__lang" href={t.switchHref} hreflang={t.switchLang} lang={t.switchLang}>
+			<a class="header__lang" href={switchHref} hreflang={t.switchLang} lang={t.switchLang}>
 				{t.switchLabel}
 			</a>
 			<a class="header__contact" href="mailto:contact@lehmora.com">{t.contact}</a>
@@ -43,9 +47,9 @@ const links = [
 				<summary>{t.menu}</summary>
 				<div class="menu__panel">
 					<ul>
-						{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+						{links.map((link) => <li><a href={link.href} aria-current={current(link.href)}>{link.label}</a></li>)}
 						<li class="menu__lang">
-							<a href={t.switchHref} hreflang={t.switchLang} lang={t.switchLang}>{t.switchLabel}</a>
+							<a href={switchHref} hreflang={t.switchLang} lang={t.switchLang}>{t.switchLabel}</a>
 						</li>
 					</ul>
 					<a class="btn btn--solid menu__cta" href="mailto:contact@lehmora.com">{t.contact}</a>
@@ -115,6 +119,14 @@ const links = [
 	.header__nav a:hover,
 	.header__lang:hover {
 		color: var(--color-ink);
+	}
+
+	.header__nav a[aria-current="page"] {
+		color: var(--color-ink);
+		font-weight: 600;
+		text-decoration: underline;
+		text-decoration-thickness: 1.5px;
+		text-underline-offset: 0.3em;
 	}
 
 	.header__actions {

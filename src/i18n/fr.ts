@@ -2,9 +2,9 @@ export const fr = {
   meta: {
     title: "Lehmora Labs, studio d'ingénierie logicielle à Douala",
     description:
-      "Lehmora Labs, studio d'ingénierie logicielle à Douala, construit les logiciels qui tiennent les comptes des tontines et des écoles sans détenir leur argent. Quatre produits : Famsub, Tallyno, Payskool et Marge.",
-    ogImageAlt: "Lehmora Labs : tenir les comptes des tontines et des écoles, sans jamais tenir leur argent. Fonds de la tontine détenus par Tallyno : 0 XAF.",
+      "Lehmora Labs, studio d'ingénierie logicielle à Douala, construit les logiciels qui tiennent les comptes des tontines et des écoles sans détenir leur argent. Produit phare : Tallyno.",
     ogImage: "/og-fr.png",
+    ogImageAlt: "Lehmora Labs : tenir les comptes des tontines et des écoles, sans jamais tenir leur argent. Fonds de la tontine détenus par Tallyno : 0 XAF.",
     ogLocale: "fr_FR",
     skip: "Aller au contenu",
   },
@@ -12,14 +12,17 @@ export const fr = {
     origin: "Origine",
     custody: "Principe",
     engine: "Le moteur",
-    infra: "Infra",
     products: "Produits",
     status: "État",
+    journal: "Journal",
+    journalHref: "/engineering/",
     contact: "Nous écrire",
     menu: "Menu",
+    newTab: "(nouvel onglet)",
     main: "Navigation principale",
     footer: "Liens du pied de page",
     home: "Lehmora Labs, accueil",
+    homeHref: "/",
     switchLabel: "English",
     switchHref: "/en/",
     switchLang: "en",
@@ -27,7 +30,7 @@ export const fr = {
   hero: {
     title: "Tenir les comptes des tontines et des écoles, sans jamais tenir leur argent.",
     lead: "Lehmora Labs est un studio d'ingénierie logicielle basé à Douala. Pour les tontines et les écoles, nos produits enregistrent qui doit quoi, depuis quand, et qui a confirmé le règlement. L'argent, lui, va du payeur au bénéficiaire sans transiter par nous.",
-    ctaPrimary: "Voir les produits",
+    ctaPrimary: "Découvrir Tallyno",
     ctaSecondary: "Écrire au studio",
     ledger: {
       label: "Exemple de tour de tontine",
@@ -70,10 +73,11 @@ export const fr = {
       {
         label: "lehmora-infra",
         text: "9 décisions d'architecture écrites avant de provisionner le moindre serveur.",
+        href: "/engineering/",
       },
       {
         label: "nui_flutter",
-        text: "Le design system Flutter commun à Famsub, Tallyno et Marge.",
+        text: "Le design system Flutter commun aux applications mobiles du studio.",
       },
       {
         label: "Stack",
@@ -88,9 +92,20 @@ export const fr = {
   custody: {
     label: "Principe",
     title: "Pourquoi nous ne gardons pas l'argent.",
-    paragraphs: [
-      "Famsub, notre produit le plus avancé, suit le modèle classique du séquestre : l'abonné paie, Famsub retient la somme 30 jours, puis la reverse au propriétaire. Dans les 7 jours qui suivent son adhésion, l'abonné peut être remboursé. Pour que ce soit juste, il a fallu une période de rétention, une file de règlement, un grand livre à double entrée et une logique de remboursement. Détenir l'argent des autres, c'est en répondre à chaque litige.",
-      "Pour Tallyno et Payskool, nous avons pris l'autre route. Le membre paie le bénéficiaire par Mobile Money ; la famille paie l'école sur son propre compte marchand. Notre logiciel tient le registre : qui doit quoi, depuis quand, et qui a confirmé le règlement.",
+    lead: "À Douala, l'objection n'était pas la technologie : personne ne voulait confier l'argent du groupe à une application. Tallyno part de là, et Payskool applique le même principe aux écoles. Le membre paie le bénéficiaire par Mobile Money ; la famille paie l'école sur son propre compte marchand. Nous tenons le registre : qui doit quoi, depuis quand, et qui a confirmé le règlement.",
+    reasons: [
+      {
+        title: "Aucune confiance à demander",
+        text: "Pour utiliser Tallyno ou Payskool, un membre ou une famille n'a pas à nous remettre son argent. Il suffit de faire confiance au registre, qu'il peut vérifier.",
+      },
+      {
+        title: "Aucun fonds bloqué chez nous",
+        text: "Avec Tallyno et Payskool, l'argent ne transite pas par nos comptes. Si le studio s'arrêtait, aucun groupe ni aucune école n'aurait de fonds à récupérer auprès de nous.",
+      },
+      {
+        title: "Une structure légère",
+        text: "Pour ces deux produits, pas de trésorerie client à réconcilier ni de fonds en transit à surveiller. Leur coût reste celui d'un logiciel.",
+      },
     ],
     escrow: {
       title: "Famsub, le séquestre",
@@ -111,6 +126,7 @@ export const fr = {
       registryNote: "qui doit quoi, depuis quand, qui a confirmé",
       held: "Fonds détenus : aucun",
     },
+    famsub: "Famsub est l'exception, et c'est un choix : pour le partage d'abonnements, l'abonné doit être protégé si le service n'est pas livré. Famsub retient donc la somme 30 jours avant de la reverser au propriétaire, avec un remboursement possible dans les 7 jours suivant l'adhésion. Le construire correctement a demandé une file de règlement, un grand livre à double entrée et une logique de remboursement : c'est précisément le coût que les autres produits évitent.",
   },
   rules: {
     label: "Le moteur",
@@ -136,7 +152,7 @@ export const fr = {
       },
       {
         dispute: "La pénalité a été comptée deux fois.",
-        rule: "Quand le groupe a choisi des pénalités de retard, elles sont recalculées de zéro chaque nuit, jamais incrémentées. Un traitement interrompu puis relancé ne double rien.",
+        rule: "Les pénalités de retard, une option à venir, sont recalculées de zéro chaque nuit, jamais incrémentées. Un traitement interrompu puis relancé ne double rien.",
         code: "penaltyAmount",
       },
       {
@@ -157,61 +173,37 @@ export const fr = {
     ],
     source: "Extrait des 17 invariants documentés du module tontine de Tallyno.",
   },
-  infra: {
-    label: "Infra",
-    title: "L'infrastructure est écrite avant d'être allumée.",
-    lead: "Un seul dépôt décrit comment Famsub, Tallyno puis Payskool seront déployés : stacks Docker Compose, scripts, sauvegardes, supervision. Il est conçu pour qu'un serveur perdu se reconstruise depuis une Ubuntu vierge, avec ce dépôt et les sauvegardes hors site.",
-    separation: "aucun réseau, aucune base, aucun secret partagé",
-    nodes: [
-      {
-        name: "prod-node",
-        items: [
-          "Traefik, routage et TLS",
-          "PostgreSQL, une base et un rôle par application",
-          "Redis",
-          "Backends Famsub et Tallyno",
-          "Sauvegardes par base, hors site",
-          "Supervision Uptime Kuma",
-          "Mail auto-hébergé, Stalwart",
-        ],
-      },
-      {
-        name: "staging-node",
-        items: [
-          "Traefik",
-          "PostgreSQL et Redis dédiés",
-          "Copies isolées des backends",
-          "Pas de mail",
-        ],
-      },
-    ],
-    tradeoffTitle: "Le compromis",
-    tradeoff: "Pas de multi-région, pas de haute disponibilité. Pour trois petits backends, un serveur reconstructible et bien sauvegardé coûte moins cher et se comprend mieux qu'un cluster.",
-    stateTitle: "État réel",
-    state: "Stacks, scripts et décisions sont versionnés. Les deux serveurs ne sont pas encore provisionnés : rien de tout cela ne sert encore de trafic réel.",
-    adrTitle: "Décisions d'architecture",
-    adrs: [
-      { id: "D-01", text: "Deux serveurs séparés par environnement, pas par type de service." },
-      { id: "D-02", text: "Un moteur PostgreSQL par serveur, une base et un rôle par application." },
-      { id: "D-03", text: "Ni Portainer ni webhooks : git pull et docker compose via SSH." },
-      { id: "D-04", text: "Aucun maillage réseau entre production et staging." },
-      { id: "D-05", text: "Mail auto-hébergé, sur la production uniquement." },
-      { id: "D-06", text: "Destination des sauvegardes non liée à un fournisseur." },
-      { id: "D-07", text: "Un dump par base, restaurable application par application." },
-      { id: "D-08", text: "Une seule instance de supervision pour les deux serveurs." },
-      { id: "D-09", text: "Tallyno reprend le pipeline de build de Famsub (en cours de fusion)." },
-    ],
-  },
   products: {
     label: "Produits",
-    title: "Quatre produits. Un seul détient de l'argent.",
-    intro: "Trois produits sur quatre ne touchent jamais aux fonds de leurs utilisateurs. Le quatrième, Famsub, les garde en séquestre, et l'assume.",
+    title: "Tallyno d'abord.",
+    intro: "Tallyno porte la thèse du studio : la tontine, sans que personne ne nous confie son argent. C'est là que se concentre l'effort.",
+    flagship: {
+      tagline: "Tontines et dépenses de groupe.",
+      points: [
+        "Tours, cotisations et dettes suivis groupe par groupe.",
+        "Chaque paiement déclaré par le payeur, puis confirmé par le bénéficiaire ou le trésorier du groupe.",
+        "Les règles du groupe appliquées par le code, de l'ordre des tours au report des dettes.",
+      ],
+      screens: {
+        round: {
+          caption: "Le tour en cours : qui a payé, qui doit encore.",
+          alt: "Écran de Tallyno montrant le tour de tontine en cours.",
+        },
+        debts: {
+          caption: "Les dettes du groupe : qui doit quoi, depuis quand.",
+          alt: "Écran de Tallyno montrant les dettes des membres du groupe.",
+        },
+      },
+      screensLabel: "Captures d'écran de Tallyno, défilables horizontalement",
+    },
+    othersTitle: "Les autres produits du studio",
+    shared: "Ce qu'ils partagent avec Tallyno : le design system Flutter nui_flutter, un socle backend NestJS et, une fois provisionnée, une infrastructure commune.",
+    sharedLink: "Le détail est dans le journal d'ingénierie.",
     cols: {
       product: "Produit",
       purpose: "Ce qu'il fait",
       funds: "Détient l'argent ?",
       status: "État",
-      stack: "Stack",
     },
     items: {
       famsub: {
@@ -235,34 +227,15 @@ export const fr = {
       staging: "En staging",
       dev: "En développement",
     },
-    visit: "Visiter le site de {name}",
-    shared: {
-      title: "Ce qui est réellement partagé",
-      intro: "Pas de « moteur commun » abstrait. Trois briques concrètes, utilisées ou prévues par plusieurs produits.",
-      assets: {
-        infra: "Déploiement, bases, sauvegardes, supervision.",
-        nui: "Composants et thème Flutter communs.",
-        nest: "Même framework backend, mêmes conventions.",
-      },
-      legend: {
-        yes: "utilisé",
-        planned: "prévu",
-        no: "non concerné",
-      },
-      corner: "Brique partagée",
-      scrollLabel: "Tableau des briques partagées, défilable horizontalement",
-      emptyLegend: "case vide : non concerné",
-    },
   },
   status: {
     label: "État",
-    title: "Où nous en sommes, sans arrondi.",
+    title: "Où nous en sommes.",
     updated: "Mis à jour en novembre 2026",
-    lead: "Aucun produit n'est encore en production. Famsub tourne en staging. Tallyno, Payskool et Marge sont en développement.",
+    lead: "Aucun produit n'est encore en production. Famsub tourne en staging ; Tallyno et Payskool sont en développement.",
     nextTitle: "Prochaines étapes",
     next: [
-      "Provisionner les deux serveurs décrits par lehmora-infra.",
-      "Basculer les déploiements de Famsub et Tallyno sur l'infrastructure du studio.",
+      "Provisionner l'infrastructure du studio et y basculer les déploiements de Famsub et Tallyno.",
       "Valider Famsub et Tallyno en staging, avec des données anonymisées au profil réel.",
     ],
     contactTitle: "Nous écrire",
@@ -270,6 +243,55 @@ export const fr = {
     ctaMail: "contact@lehmora.com",
     ctaInvest: "Parler investissement",
     investSubject: "Relation investisseurs",
+  },
+  engineering: {
+    title: "Journal d'ingénierie, Lehmora Labs",
+    description: "Les décisions techniques de Lehmora Labs, avec leur raison et leur coût : déploiement, isolation des environnements, sauvegardes.",
+    heading: "Journal d'ingénierie",
+    intro: "Les décisions techniques du studio, écrites avec leur raison et leur coût. Pour les développeurs qui veulent savoir comment c'est construit.",
+    back: "Retour à l'accueil",
+    entry: {
+      date: "Novembre 2026",
+      datetime: "2026-11",
+      title: "Trois backends, deux serveurs, neuf décisions.",
+      paragraphs: [
+        "Famsub, Tallyno puis Payskool ont chacun un backend NestJS avec PostgreSQL et Redis. Plutôt que de laisser chaque produit se déployer à sa manière, un dépôt unique, lehmora-infra, décrit l'ensemble : stacks Docker Compose, scripts, sauvegardes, supervision. Il est conçu pour qu'un serveur perdu se reconstruise depuis une Ubuntu vierge, avec ce dépôt et les sauvegardes hors site.",
+        "La production et le staging sont prévus sur deux serveurs distincts, qui ne partageront ni réseau, ni base, ni secret. Une migration ratée ou un conteneur qui consomme toute la mémoire en staging ne pourra pas faire tomber la production.",
+      ],
+      tradeoffTitle: "Le compromis",
+      tradeoff: "Pas de multi-région, pas de haute disponibilité. Pour trois petits backends, un serveur reconstructible et bien sauvegardé coûte moins cher et se comprend mieux qu'un cluster.",
+      stateTitle: "État réel",
+      state: "Stacks, scripts et décisions sont versionnés. Les deux serveurs ne sont pas encore provisionnés : rien de tout cela ne sert encore de trafic réel.",
+      adrTitle: "Les décisions",
+      adrs: [
+        { id: "D-01", text: "Deux serveurs séparés par environnement, pas par type de service." },
+        { id: "D-02", text: "Un moteur PostgreSQL par serveur, une base et un rôle par application." },
+        { id: "D-03", text: "Ni Portainer ni webhooks : git pull et docker compose via SSH." },
+        { id: "D-04", text: "Aucun maillage réseau entre production et staging." },
+        { id: "D-05", text: "Mail auto-hébergé, sur la production uniquement." },
+        { id: "D-06", text: "Destination des sauvegardes non liée à un fournisseur." },
+        { id: "D-07", text: "Un dump par base, restaurable application par application." },
+        { id: "D-08", text: "Une seule instance de supervision pour les deux serveurs." },
+        { id: "D-09", text: "Tallyno reprend le pipeline de build de Famsub (en cours de fusion)." },
+      ],
+      shared: {
+        title: "Ce que les produits partagent réellement",
+        intro: "Pas de « moteur commun » abstrait. Trois briques concrètes, utilisées ou prévues par plusieurs produits.",
+        assets: {
+          infra: "Déploiement, bases, sauvegardes, supervision.",
+          nui: "Composants et thème Flutter communs.",
+          nest: "Même framework backend, mêmes conventions.",
+        },
+        legend: {
+          yes: "utilisé",
+          planned: "prévu",
+          no: "non concerné",
+        },
+        corner: "Brique partagée",
+        scrollLabel: "Tableau des briques partagées, défilable horizontalement",
+        emptyLegend: "case vide : non concerné",
+      },
+    },
   },
   footer: {
     tagline: "Studio d'ingénierie logicielle, Douala. Nous tenons les comptes ; l'argent, seulement quand un séquestre l'exige.",

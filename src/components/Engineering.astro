@@ -1,0 +1,201 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteHeader from "./SiteHeader.astro";
+import Section from "./Section.astro";
+import SharedMatrix from "./SharedMatrix.astro";
+import Footer from "./Footer.astro";
+import { getDict, type Lang } from "../i18n";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const t = dict.engineering;
+const entry = t.entry;
+const alternates = { fr: "/engineering/", en: "/en/engineering/" };
+const switchHref = lang === "fr" ? alternates.en : alternates.fr;
+---
+
+<Layout
+	lang={lang}
+	title={t.title}
+	description={t.description}
+	ogImage={dict.meta.ogImage}
+	ogImageAlt={dict.meta.ogImageAlt}
+	ogLocale={dict.meta.ogLocale}
+	alternates={alternates}
+>
+	<a class="skip-link" href="#main">{dict.meta.skip}</a>
+	<SiteHeader lang={lang} switchHref={switchHref} />
+	<main id="main">
+		<header class="page-head">
+			<div class="frame page-head__grid">
+				<p class="page-head__back"><a class="link" href={dict.nav.homeHref}>{t.back}</a></p>
+				<div class="page-head__body">
+					<h1>{t.heading}</h1>
+					<p class="page-head__intro">{t.intro}</p>
+				</div>
+			</div>
+		</header>
+
+		<Section id="entry-2026-11" label={entry.date} title={entry.title}>
+			<!-- The margin label shows the date but is aria-hidden; this copy is for screen readers. -->
+			<p class="sr-only"><time datetime={entry.datetime}>{entry.date}</time></p>
+
+			<div class="prose">
+				{entry.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+
+			<div class="notes">
+				<div class="note">
+					<h3>{entry.tradeoffTitle}</h3>
+					<p>{entry.tradeoff}</p>
+				</div>
+				<div class="note note--state">
+					<h3>{entry.stateTitle}</h3>
+					<p>{entry.state}</p>
+				</div>
+			</div>
+
+			<div class="adrs">
+				<h3>{entry.adrTitle}</h3>
+				<ol>
+					{
+						entry.adrs.map((adr) => (
+							<li>
+								<code>{adr.id}</code>
+								<span>{adr.text}</span>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+
+			<SharedMatrix lang={lang} />
+		</Section>
+	</main>
+	<Footer lang={lang} switchHref={switchHref} />
+</Layout>
+
+<style>
+	.page-head__grid {
+		display: grid;
+		padding-block: 3rem 3.5rem;
+	}
+
+	.page-head__back {
+		font-size: 0.95rem;
+	}
+
+	.page-head__body {
+		margin-top: 1.75rem;
+		min-width: 0;
+	}
+
+	.page-head h1 {
+		font-size: clamp(2.6rem, 1.6rem + 4vw, 4.6rem);
+		font-weight: 800;
+		font-stretch: 72%;
+		line-height: 0.98;
+		letter-spacing: -0.015em;
+	}
+
+	.page-head__intro {
+		max-width: 36rem;
+		margin-top: 1.25rem;
+		font-family: var(--font-serif);
+		font-size: 1.15rem;
+		line-height: 1.6;
+		color: var(--color-ink-2);
+	}
+
+	.prose {
+		max-width: 40rem;
+		margin-top: 2rem;
+		font-family: var(--font-serif);
+		font-size: 1.12rem;
+		line-height: 1.68;
+	}
+
+	.prose p + p {
+		margin-top: 1.1em;
+	}
+
+	.notes {
+		display: grid;
+		gap: 1.5rem;
+		margin-top: 2.5rem;
+	}
+
+	.note {
+		padding-left: 1rem;
+		border-left: 3px solid var(--color-ink);
+	}
+
+	.note--state {
+		border-left-style: dashed;
+	}
+
+	.note h3,
+	.adrs h3 {
+		font-weight: 700;
+		font-stretch: 85%;
+		font-size: 1.05rem;
+	}
+
+	.note p {
+		margin-top: 0.35rem;
+		max-width: 30rem;
+		color: var(--color-ink-2);
+	}
+
+	.adrs {
+		margin-top: 3rem;
+	}
+
+	.adrs ol {
+		margin-top: 0.85rem;
+		border-top: 1.5px solid var(--color-ink);
+	}
+
+	.adrs li {
+		display: grid;
+		grid-template-columns: 3.5rem minmax(0, 1fr);
+		gap: 1rem;
+		align-items: baseline;
+		padding-block: 0.55rem;
+		border-bottom: 1px solid var(--color-rule);
+		font-size: 0.97rem;
+	}
+
+	.adrs li code {
+		color: var(--color-green);
+	}
+
+	@media (min-width: 46rem) {
+		.notes {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 2.5rem;
+		}
+	}
+
+	@media (min-width: 60rem) {
+		.page-head__grid {
+			grid-template-columns: var(--margin-col) minmax(0, 1fr);
+			padding-block: 0;
+		}
+
+		.page-head__back {
+			padding-top: 4.4rem;
+			padding-right: 1.5rem;
+		}
+
+		.page-head__body {
+			margin-top: 0;
+			padding: 4rem 0 4.5rem 3rem;
+			border-left: 3px double var(--color-rule-strong);
+		}
+	}
+</style>

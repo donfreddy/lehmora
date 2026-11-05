@@ -84,6 +84,17 @@ code {
   padding-inline: var(--gutter);
 }
 
+/* Read by screen readers, not drawn. Keep its scroll containers position: relative,
+   or the absolute box can escape an overflow clip and widen the page. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .skip-link {
   position: absolute;
   left: 1rem;

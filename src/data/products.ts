@@ -12,6 +12,8 @@ export interface Product {
   status: ProductStatus;
   /** Whether the product ever holds user funds. */
   holdsFunds: boolean;
+  /** Shown on the site. Set to false to keep a product out of every list. */
+  listed: boolean;
   stack: string[];
 }
 
@@ -22,6 +24,7 @@ export const products: Product[] = [
     url: "https://famsub.com",
     status: "staging",
     holdsFunds: true,
+    listed: true,
     stack: ["NestJS", "TypeORM", "Nuxt", "Flutter"],
   },
   {
@@ -30,6 +33,7 @@ export const products: Product[] = [
     url: "https://tallyno-landing.vercel.app",
     status: "dev",
     holdsFunds: false,
+    listed: true,
     stack: ["NestJS", "Prisma", "Flutter", "Nuxt"],
   },
   {
@@ -38,6 +42,7 @@ export const products: Product[] = [
     url: "https://payskool.vercel.app",
     status: "dev",
     holdsFunds: false,
+    listed: true,
     stack: ["NestJS", "Next.js"],
   },
   {
@@ -46,8 +51,30 @@ export const products: Product[] = [
     url: "https://marge-landing.vercel.app",
     status: "dev",
     holdsFunds: false,
+    // Kept out of the site for now (owner decision, Nov 2026).
+    listed: false,
     stack: ["Flutter", "Drift"],
   },
+];
+
+/**
+ * Flagship screenshots. The files in public/screens are SVG placeholders:
+ * capture the real screens at 1170 x 2532 (portrait phone), drop them in
+ * public/screens and change `src` here (e.g. "/screens/tallyno-round.webp").
+ * Set `width` and `height` to the real pixel size of each file: they give the
+ * frame its ratio, so a 1080 x 2400 Android capture works too.
+ * Captions and alt text live in src/i18n.
+ */
+export interface Screenshot {
+  key: "round" | "debts";
+  src: string;
+  width: number;
+  height: number;
+}
+
+export const flagshipScreens: Screenshot[] = [
+  { key: "round", src: "/screens/tallyno-round.svg", width: 1170, height: 2532 },
+  { key: "debts", src: "/screens/tallyno-debts.svg", width: 1170, height: 2532 },
 ];
 
 /** What the studio actually shares across products, and who uses it. */
@@ -104,3 +131,6 @@ export const sampleRound = {
     { name: "Hervé B.", paidOn: null },
   ],
 } as const;
+
+/** Products shown on the site. */
+export const listedProducts = products.filter((product) => product.listed);

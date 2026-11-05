@@ -1,15 +1,18 @@
 ---
 import Logo from "./Logo.astro";
-import { products } from "../data/products";
+import { listedProducts } from "../data/products";
 import { getDict, type Lang } from "../i18n";
 
 interface Props {
 	lang: Lang;
+	/** Same page in the other language; defaults to the other home page. */
+	switchHref?: string;
 }
 
 const { lang } = Astro.props;
 const dict = getDict(lang);
 const t = dict.footer;
+const switchHref = Astro.props.switchHref ?? dict.nav.switchHref;
 ---
 
 <footer class="footer">
@@ -24,10 +27,11 @@ const t = dict.footer;
 				<p class="footer__heading">{dict.products.label}</p>
 				<ul>
 					{
-						products.map((product) => (
+						listedProducts.map((product) => (
 							<li>
 								<a href={product.url} target="_blank" rel="noreferrer">
 									{product.name}
+									<span class="sr-only">{dict.nav.newTab}</span>
 								</a>
 							</li>
 						))
@@ -38,9 +42,10 @@ const t = dict.footer;
 				<p class="footer__heading">{dict.status.contactTitle}</p>
 				<ul>
 					<li><a href="mailto:contact@lehmora.com">contact@lehmora.com</a></li>
-					<li><a href="https://github.com/lehmora" target="_blank" rel="noreferrer">GitHub</a></li>
+					<li><a href={dict.nav.journalHref}>{dict.nav.journal}</a></li>
+					<li><a href="https://github.com/lehmora" target="_blank" rel="noreferrer">GitHub <span class="sr-only">{dict.nav.newTab}</span></a></li>
 					<li>
-						<a href={dict.nav.switchHref} hreflang={dict.nav.switchLang} lang={dict.nav.switchLang}>
+						<a href={switchHref} hreflang={dict.nav.switchLang} lang={dict.nav.switchLang}>
 							{dict.nav.switchLabel}
 						</a>
 					</li>
