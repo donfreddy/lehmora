@@ -38,7 +38,15 @@ const newTab = getDict(lang).nav.newTab;
 								proof.label
 							)}
 						</dt>
-						<dd>{proof.text}</dd>
+						<dd>
+							{proof.text}
+							{proof.more && (
+								<>
+									{" "}
+									<a class="link" href={proof.more.href}>{proof.more.label}</a>
+								</>
+							)}
+						</dd>
 					</div>
 				))
 			}

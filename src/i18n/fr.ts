@@ -73,7 +73,7 @@ export const fr = {
       {
         label: "lehmora-infra",
         text: "9 décisions d'architecture écrites avant de provisionner le moindre serveur.",
-        href: "/engineering/",
+        more: { label: "Lire le journal d'ingénierie", href: "/engineering/" },
       },
       {
         label: "nui_flutter",
@@ -247,6 +247,8 @@ export const fr = {
   engineering: {
     title: "Journal d'ingénierie, Lehmora Labs",
     description: "Les décisions techniques de Lehmora Labs, avec leur raison et leur coût : déploiement, isolation des environnements, sauvegardes.",
+    ogImage: "/og-engineering-fr.png",
+    ogImageAlt: "Lehmora Labs, journal d'ingénierie : trois backends, deux serveurs, neuf décisions d'architecture écrites.",
     heading: "Journal d'ingénierie",
     intro: "Les décisions techniques du studio, écrites avec leur raison et leur coût. Pour les développeurs qui veulent savoir comment c'est construit.",
     back: "Retour à l'accueil",

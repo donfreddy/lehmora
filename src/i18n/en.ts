@@ -16,7 +16,7 @@ export const en: Dict = {
     engine: "The engine",
     products: "Products",
     status: "Status",
-    journal: "Engineering",
+    journal: "Engineering notes",
     journalHref: "/en/engineering/",
     contact: "Write to us",
     menu: "Menu",
@@ -75,7 +75,7 @@ export const en: Dict = {
       {
         label: "lehmora-infra",
         text: "9 architecture decisions written before provisioning a single server.",
-        href: "/en/engineering/",
+        more: { label: "Read the engineering notes", href: "/en/engineering/" },
       },
       {
         label: "nui_flutter",
@@ -249,6 +249,8 @@ export const en: Dict = {
   engineering: {
     title: "Engineering notes, Lehmora Labs",
     description: "Lehmora Labs' technical decisions, with their reasons and their cost: deployment, environment isolation, backups.",
+    ogImage: "/og-engineering-en.png",
+    ogImageAlt: "Lehmora Labs engineering notes: three backends, two servers, nine architecture decisions written down.",
     heading: "Engineering notes",
     intro: "The studio's technical decisions, written down with their reasons and their cost. For developers who want to know how it is built.",
     back: "Back to the home page",
